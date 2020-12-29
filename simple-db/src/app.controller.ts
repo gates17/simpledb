@@ -1,11 +1,25 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { LocalAuthGuard } from './auth/local-auth.guard';
+// import { AppService } from './app.service';
+import { Controller, Request, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('products')
+@Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  /* updated
+  @UseGuards(AuthGuard('local'))
+  @Post('auth/login')
+  async login(@Request() req) {
+    return req.user;
+  }
+  */
 
-  /*
+  @UseGuards(LocalAuthGuard)
+  @Post('auth/login')
+  async login(@Request() req) {
+    return req.user;
+  }
+
+  /* constructor(private readonly appService: AppService) {}
   @Get()
   async getProducts() {
     return this.appService.getProducts();

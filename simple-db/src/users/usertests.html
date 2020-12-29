@@ -12,7 +12,7 @@ PUT http://localhost:3000/users/2 HTTP/1.1
 content-type: application/json
 
 {
-    "name":"tico"
+    "user":"tico"
 }
 
 
@@ -23,6 +23,10 @@ content-type: application/json
 
 #####
 
-GET http://localhost:3000/users?user=admin HTTP/1.1
+GET http://localhost:3000/users/tico HTTP/1.1
 Accept-Language: en-GB,en-US;q=0.8,en;q=0.6,zh-CN;q=0.4
 content-type: application/json
+
+
+#####
+curl -X POST http://localhost:3000/auth/login -d '{"username": "admin", "password": "qweasd"}' -H "Content-Type: application/json"
