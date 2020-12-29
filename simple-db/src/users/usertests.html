@@ -29,4 +29,19 @@ content-type: application/json
 
 
 #####
-curl -X POST http://localhost:3000/auth/login -d '{"username": "admin", "password": "qweasd"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:3000/auth/login -d '{"username": "tico", "password": "123qwe"}' -H "Content-Type: application/json"
+
+
+#####
+# GET /profile
+curl -X GET http://localhost:3000/profile
+# result -> {"statusCode":401,"error":"Unauthorized"} 
+
+
+#####
+# GET /profile using access_token returned from previous step as bearer code
+curl http://localhost:3000/profile -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDkyNjgxOTcsImV4cCI6MTYwOTI3MTc5N30.N3RX1jeg-Xv69mtT-DZGrRmMLVGR3imzwqbXciSXkuI" 
+# result -> {"userId":1,"username":"john"}
+
+#####
+curl http://localhost:3000/producttype  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDkyNjgxOTcsImV4cCI6MTYwOTI3MTc5N30.N3RX1jeg-Xv69mtT-DZGrRmMLVGR3imzwqbXciSXkuI"
