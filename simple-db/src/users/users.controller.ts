@@ -1,6 +1,7 @@
 // eslint-disable-next-line prettier/prettier
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/users.dto';
 
 @Controller('users')
 export class UsersController {
@@ -19,6 +20,11 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<any> {
     return await this.usersService.findOne(id);
+  }
+
+  @Get('name/:user')
+  async findOneName(@Param('user') user: string): Promise<any> {
+    return await this.usersService.findOneName(user);
   }
 
   @Put(':id')

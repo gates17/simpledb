@@ -14,6 +14,7 @@ import { ProductmaterialModule } from './productmaterial/productmaterial.module'
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UsersModule } from './users/users.module';
     ProducttypeModule,
     ProductmaterialModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [
     AppController,

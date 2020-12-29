@@ -1,0 +1,28 @@
+POST http://localhost:3000/users HTTP/1.1
+content-type: application/json
+
+{
+    "user":"admin2",
+    "password":"123qwe"
+ }
+
+#####
+
+PUT http://localhost:3000/users/2 HTTP/1.1
+content-type: application/json
+
+{
+    "name":"tico"
+}
+
+
+#####
+
+DELETE http://localhost:3000/users/1 HTTP/1.1
+content-type: application/json
+
+#####
+
+GET http://localhost:3000/users?user=admin HTTP/1.1
+Accept-Language: en-GB,en-US;q=0.8,en;q=0.6,zh-CN;q=0.4
+content-type: application/json

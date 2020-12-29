@@ -5,6 +5,8 @@ import { KNEX_CONNECTION } from '@nestjsplus/knex';
 export class UsersService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
+  // private readonly _users = this.knex.table('users').select().from('users');
+
   async findAll(): Promise<any> {
     let users = [];
     const trx = await this.knex.transaction();
@@ -25,8 +27,12 @@ export class UsersService {
     return await this.knex('users').select('*').where('id', id);
   }
 
+  async findOneName(user: string): Promise<any> {
+    return await this.knex('users').select('*').where('user', user);
+  }
+
   async update(id: number, body: any): Promise<any> {
-    //body["updatedAt"]=this.knex.fn.now();
+    // body["updatedAt"]=this.knex.fn.now();
     return await this.knex('users').where('id', id).update(body);
   }
 

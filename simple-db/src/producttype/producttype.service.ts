@@ -29,7 +29,7 @@ export class ProducttypeService {
   }
 
   async update(id: number, body: any): Promise<any> {
-    //body["updatedAt"]=this.knex.fn.now();
+    // body["updatedAt"]=this.knex.fn.now();
     return await this.knex('producttype').where('id', id).update(body);
   }
 
