@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseURL = 'http://localhost:3000/productmaterial';
+const baseURL = 'http://localhost:3000/producttype';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
     Authorization: 'my-auth-token'
   })
 };
-
 @Injectable({
   providedIn: 'root'
 })
-export class ProductmaterialService {
+export class ProducttypeService {
 
   constructor(private httpClient: HttpClient) { }
 

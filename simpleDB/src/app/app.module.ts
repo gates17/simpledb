@@ -15,6 +15,14 @@ import { ProductmaterialdeleteComponent } from './components/productmaterialdele
 import { ProductmaterialdetailComponent } from './components/productmaterialdetail/productmaterialdetail.component';
 import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProductdeleteComponent } from './components/productdelete/productdelete.component';
+import { ProductcreateComponent } from './components/productcreate/productcreate.component';
+import { ProductupdateComponent } from './components/productupdate/productupdate.component';
+import { ProductdetailComponent } from './components/productdetail/productdetail.component';
+import { ProducttypedeleteComponent } from './components/producttypedelete/producttypedelete.component';
+import { ProducttypecreateComponent } from './components/producttypecreate/producttypecreate.component';
+import { ProducttypedetailComponent } from './components/producttypedetail/producttypedetail.component';
+import { ProducttypeupdateComponent } from './components/producttypeupdate/producttypeupdate.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +35,15 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     ProductmaterialdeleteComponent,
     ProductmaterialdetailComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProductdeleteComponent,
+    ProductcreateComponent,
+    ProductupdateComponent,
+    ProductdetailComponent,
+    ProducttypedeleteComponent,
+    ProducttypecreateComponent,
+    ProducttypedetailComponent,
+    ProducttypeupdateComponent
   ],
   imports: [
     BrowserModule,

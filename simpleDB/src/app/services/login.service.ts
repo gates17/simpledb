@@ -12,6 +12,6 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { }
 
   post(data): Observable<any> {
-    return this.httpClient.post(baseURL, data.value);
+    return this.httpClient.post(baseURL, data);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductmaterialService } from 'src/app/services/productmaterial.service';
 
 @Component({
@@ -7,32 +8,45 @@ import { ProductmaterialService } from 'src/app/services/productmaterial.service
   styleUrls: ['./productmaterial.component.scss']
 })
 export class ProductmaterialComponent implements OnInit {
-
-  products: any;
+  access_token: any;
+  materials: any;
   currentProduct = null;
   currentIndex = -1;
   name = '';
 
-  constructor(private productmaterialService: ProductmaterialService) { }
+  constructor(
+    private productmaterialService: ProductmaterialService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    this.readProducts();
+    this.access_token= sessionStorage.getItem('access_token')
+    console.log('nginit')
+    this.readProductMaterials();
   }
 
-  readProducts(): void {
-    this.productmaterialService.getAll()
+  gotoLogin(){
+    this.router.navigate(['/login']);
+  }
+
+  readProductMaterials(): void {
+    console.log('getall')
+    console.log(this.access_token)
+    this.productmaterialService.getAll(this.access_token)
       .subscribe(
-        products => {
-          this.products = products;
-          console.log(products);
+        materials => {
+          this.materials = materials;
+          console.log(this.materials)
         },
         error => {
+          console.log('error')
           console.log(error);
+          this.gotoLogin();
         });
   }
-
+  /*
   refresh(): void {
-    this.readProducts();
+    this.readProductMaterials();
     this.currentProduct = null;
     this.currentIndex = -1;
   }
@@ -47,7 +61,7 @@ export class ProductmaterialComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          this.readProducts();
+          this.readProductMaterials();
         },
         error => {
           console.log(error);
@@ -58,11 +72,12 @@ export class ProductmaterialComponent implements OnInit {
     this.productmaterialService.searchByName(this.name)
       .subscribe(
         products => {
-          this.products = products;
+          this.materials = products;
           console.log(products);
         },
         error => {
           console.log(error);
         });
   }
+  */
 }

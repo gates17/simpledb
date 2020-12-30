@@ -4,6 +4,7 @@ body {
 
 .table {
   border-spacing: 0 0.85rem !important;
+  padding: 0 25px;
 }
 
 .table .dropdown {
@@ -17,13 +18,17 @@ body {
   border: none;
 }
 
-.table thead tr,
+.table thead tr{
+  text-align: left;
+}
+
 .table thead th {
   border: none;
   font-size: 12px;
   letter-spacing: 1px;
   text-transform: uppercase;
   background: transparent;
+  padding-left: 15px;
 }
 
 .table td {
@@ -31,11 +36,13 @@ body {
 }
 
 .table td:first-child {
+  width: 15%;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 
 .table td:last-child {
+  width: 15%;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -185,7 +192,17 @@ table.dataTable {
       color: #467fcf;
     }
 
-    .avatar-pink {
-      background-color: #fcd3e1;
-      color: #f66d9b;
-    }
+.avatar-pink {
+  background-color: #fcd3e1;
+  color: #f66d9b;
+}
+
+
+.container{
+  width: 80%;
+  margin: 0% 10%;
+}
+
+.py-5{
+  background-color: #eaecef;
+}

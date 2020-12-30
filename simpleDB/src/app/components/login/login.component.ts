@@ -25,13 +25,21 @@ export class LoginComponent implements OnInit {
   }
 
   gotoList() {
-    this.router.navigate(['/productmaterial']);
+    this.router.navigate(['/dashboard']);
   }
 
   login() {
-    console.log(this.loginForm)
-    this.loginService.post(this.loginForm).subscribe(result => { console.log(result)
-      //this.gotoList();
+    this.loginService.post(this.loginForm.value).subscribe(result => {
+      let jwt = result
+      if("access_token" in jwt){
+        localStorage.setItem('user', this.loginForm.value)
+        sessionStorage.setItem('access_token', jwt['access_token'])
+      }
+      else{
+        this.router.navigate(['/login'])
+        alert('user not found')
+      }
+      this.gotoList();
     }, error => console.error(error));
   }
 
