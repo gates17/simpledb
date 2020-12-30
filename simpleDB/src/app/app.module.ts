@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgModule } from '@angular/core';
 
@@ -13,6 +13,8 @@ import { ProductmaterialcreateComponent } from './components/productmaterialcrea
 import { ProductmaterialupdateComponent } from './components/productmaterialupdate/productmaterialupdate.component';
 import { ProductmaterialdeleteComponent } from './components/productmaterialdelete/productmaterialdelete.component';
 import { ProductmaterialdetailComponent } from './components/productmaterialdetail/productmaterialdetail.component';
+import { LoginComponent } from './components/login/login.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,15 @@ import { ProductmaterialdetailComponent } from './components/productmaterialdeta
     ProductmaterialcreateComponent,
     ProductmaterialupdateComponent,
     ProductmaterialdeleteComponent,
-    ProductmaterialdetailComponent
+    ProductmaterialdetailComponent,
+    LoginComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],

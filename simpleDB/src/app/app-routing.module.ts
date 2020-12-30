@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 //Components
+import { LoginComponent } from './components/login/login.component';
 import { ProductComponent } from './components/product/product.component';
 
 import { ProductmaterialComponent } from './components/productmaterial/productmaterial.component';
@@ -13,31 +14,16 @@ import { ProducttypeComponent } from './components/producttype/producttype.compo
 
 const routes: Routes = [
   { path:  '', redirectTo:  'contacts', pathMatch:  'full' },
-  /* {
-    path: 'users',
-    component: UsersComponent
-  },
-  {
-    path: 'clients',
-    component: ClientsComponent
-  },
-  {
-    path: 'brands',
-    component: BrandsComponent
-  },
-  {
-    path: 'categories',
-    component: CategoriesComponent
-  },
-  */
-  { path: 'products', component: ProductComponent },
 
-  { path: 'productmaterial', component: ProductmaterialComponent },
+  { path: 'products/', component: ProductComponent },
+
+  { path: 'productmaterial/', component: ProductmaterialComponent },
   { path: 'productmaterial/:id', component: ProductmaterialdetailComponent },
   { path: 'productmaterial/create', component: ProductmaterialcreateComponent },
   { path: 'productmaterial/update/:id', component: ProductmaterialupdateComponent },
 
   { path: 'producttype/', component: ProducttypeComponent },
+  { path: 'login/', component: LoginComponent }
 ];
 
 @NgModule({
