@@ -4,7 +4,7 @@ content-type: application/json
 {
     "user":"admin2",
     "password":"123qwe"
- }
+}
 
 #####
 
@@ -44,4 +44,25 @@ curl http://localhost:3000/profile -H "Authorization: Bearer eyJhbGciOiJIUzI1NiI
 # result -> {"userId":1,"username":"john"}
 
 #####
-curl http://localhost:3000/producttype  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDkyNjgxOTcsImV4cCI6MTYwOTI3MTc5N30.N3RX1jeg-Xv69mtT-DZGrRmMLVGR3imzwqbXciSXkuI"
+curl http://localhost:3000/producttype  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDkzNDQyMjYsImV4cCI6MTYwOTM0NzgyNn0.SGe1xf0GBajvFm26US_md9cptuvOD_2NCdz0ShIFNlo"
+
+#####
+
+POST http://localhost:3000/products/1 HTTP/1.1
+content-type: application/json
+
+{
+    "store_id": 1,
+    "type_id": 1,
+    "material_id": 1,
+    "reference": null,
+    "description": "teste",
+    "state": "",
+    "entryDate": null,
+    "lastUpdate": null,
+    "soldDate": null,
+    "seller": "",
+    "insertedBy": "",
+    "weight": null,
+    "price": null
+}    
