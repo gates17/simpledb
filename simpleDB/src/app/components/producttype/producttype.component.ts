@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { ProducttypeService } from './../../services/producttype.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,6 +14,8 @@ export class ProducttypeComponent implements OnInit {
   currentProduct = null;
   currentIndex = -1;
   name = '';
+
+  p: number = 1;
 
   constructor(
     private productTypeService: ProducttypeService,

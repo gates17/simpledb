@@ -14,6 +14,8 @@ export class ProductComponent implements OnInit {
   currentIndex = -1;
   name = '';
 
+  p: number = 1;
+
   constructor(
     private productService: ProductService,
     private router: Router,

@@ -10,11 +10,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let m of materials;let i = index">
+          <tr *ngFor="let item of materials | paginate: { itemsPerPage: 10, currentPage: p, id: 'pm' }">
             <td>
               <a href="#">
                 <div class="d-flex align-items-center">
-                  <div class="avatar avatar-blue mr-3">{{m.id}}</div>
+                  <div class="avatar avatar-blue mr-3">{{item.id}}</div>
 <!--
                   <div class="">
                     <p class="font-weight-bold mb-0">{{m.id}}</p>
@@ -23,7 +23,7 @@
                 </div>
               </a>
             </td>
-            <td>{{m.description}}</td>
+            <td>{{item.description}}</td>
             <td>
               <div class="dropdown">
                 <button class="btn btn-sm btn-icon" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,14 +40,8 @@
 
         </tbody>
       </table>
-    </div>
-  </div>
-</div>
+          <pagination-controls id="pm" (pageChange)="p = $event"></pagination-controls>
 
-<div class="container text-center">
-  <div class="row">
-    <div class="col-12">
-      <h4 class="small text-danger">local da paginação.</h4>
     </div>
   </div>
 </div>

@@ -14,6 +14,8 @@ export class ProductmaterialComponent implements OnInit {
   currentIndex = -1;
   name = '';
 
+  p: number = 1;
+
   constructor(
     private productmaterialService: ProductmaterialService,
     private router: Router,
@@ -36,7 +38,6 @@ export class ProductmaterialComponent implements OnInit {
       .subscribe(
         materials => {
           this.materials = materials;
-          console.log(this.materials)
         },
         error => {
           console.log('error')
