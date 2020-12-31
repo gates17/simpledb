@@ -45,6 +45,7 @@ h1 {
   padding: 0 0 0 21px;
   position: absolute;
   top: 0;
+  width: 100%;
 }
 
 .tabordion section article:after {
@@ -62,6 +63,7 @@ h1 {
 .tabordion input[name="sections"]:checked + label {
   background: #00b8ff;
   color: #fff;
+  width: 220px;
 }
 
 .tabordion input[name="sections"]:checked ~ article {
@@ -125,3 +127,7 @@ h1 {
   }
 }
 
+div[name="tabcontainer"]{
+  width: 80%;
+  margin: 0 10%;
+}

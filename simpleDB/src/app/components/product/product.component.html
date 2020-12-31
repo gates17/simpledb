@@ -25,6 +25,11 @@
             </td>
             <td>{{p.description}}</td>
             <td>
+            <div class="dropdown actions">
+              <button class="btn btn-sm btn-icon" [routerLink]="['/products/update/', p.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
+              <button class="btn btn-sm btn-icon" [routerLink]="['/products/detail', p.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
+            </div>
+            <!--
               <div class="dropdown">
                 <button class="btn btn-sm btn-icon" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="bx bx-dots-horizontal-rounded" data-toggle="tooltip" data-placement="top"
@@ -35,6 +40,7 @@
                   <a class="dropdown-item text-danger" href="#"><i class="bx bxs-trash mr-2"></i> Apagar</a>
                 </div>
               </div>
+              -->
             </td>
           </tr>
 

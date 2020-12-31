@@ -33,7 +33,7 @@ export class ProductService {
   }
 
   update(id, data): Observable<any> {
-    return this.httpClient.patch(`${baseURL}/${id}`, data);
+    return this.httpClient.put(`${baseURL}/${id}`, data);
   }
 
   delete(id): Observable<any> {
