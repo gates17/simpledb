@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductmaterialService } from 'src/app/services/productmaterial.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-productmaterialdetail',
@@ -8,70 +11,55 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./productmaterialdetail.component.scss']
 })
 export class ProductmaterialdetailComponent implements OnInit {
-currentProduct = null;
-  message = '';
+  private request:any;
+
+  typeReq:any;
+  product: any;
+  productSub: Subscription;
+
+
+  productForm = new FormGroup({
+    description:  new FormControl(null),
+  })
 
   constructor(
-    private productService: ProductmaterialService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private productService: ProductmaterialService,
+    private location: Location,
 
-  ngOnInit(): void {
-    this.message = '';
-    this.getProduct(this.route.snapshot.paramMap.get('id'));
+
+    ) { }
+
+    ngOnInit(): void {
+    this.productSub = this.route.params.subscribe(params => {
+      const id = params['id'];
+
+      if (id) {
+
+        this.request = this.productService.get(id).subscribe((prod: any) => {
+          if (prod) {
+            this.product = prod[0];
+
+            this.productForm.controls.description.setValue(this.product.description);
+          }
+          else {
+            this.gotoList();
+          }
+        });
+      }
+    });
   }
 
-  getProduct(id): void {
-    this.productService.get(id)
-      .subscribe(
-        product => {
-          this.currentProduct = product;
-          console.log(product);
-        },
-        error => {
-          console.log(error);
-        });
+
+  ngOnDestroy() {
+    //this.request.unsubscribe();
   }
 
-  setAvailableStatus(status): void {
-    const data = {
-      name: this.currentProduct.name,
-      description: this.currentProduct.description,
-      available: status
-    };
-
-    this.productService.update(this.currentProduct.id, data)
-      .subscribe(
-        response => {
-          this.currentProduct.available = status;
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        });
+  gotoList() {
+    this.router.navigate(['/products']);
   }
-
-  updateProduct(): void {
-    this.productService.update(this.currentProduct.id, this.currentProduct)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.message = 'The product was updated!';
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  deleteProduct(): void {
-    this.productService.delete(this.currentProduct.id)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.router.navigate(['/products']);
-        },
-        error => {
-          console.log(error);
-        });
+  goBack() {
+    this.location.back();
   }
 }

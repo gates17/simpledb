@@ -10,9 +10,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of product | paginate: { itemsPerPage: 10, currentPage: p, id:'pr' }">
+          <tr *ngFor="let item of product | paginate: { itemsPerPage: itemsTotal, currentPage: p, id:'pr' }">
             <td>
-              <a href="#">
+              <a [routerLink]="['/products/detail/', item.id ]">
                 <div class="d-flex align-items-center">
                   <div class="avatar avatar-blue mr-3">{{item.id}}</div>
 
@@ -22,8 +22,8 @@
             <td>{{item.description}}</td>
             <td>
             <div class="dropdown actions">
-              <button class="btn btn-sm btn-icon" [routerLink]="['/products/update/', p.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
-              <button class="btn btn-sm btn-icon" [routerLink]="['/products/detail', p.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
+              <button class="btn btn-sm btn-icon" [routerLink]="['/products/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
+              <button class="btn btn-sm btn-icon" [routerLink]="['/products/detail', item.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
             </div>
 
             </td>
@@ -33,6 +33,9 @@
       </table>
           <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>
 
+          <select class="browser-default custom-select" style="width: 60px;" (change)="pageItems($event)">
+            <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
+          </select>
     </div>
   </div>
 </div>

@@ -1,9 +1,10 @@
+import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { formatDate } from '@angular/common';
 })
 export class ProductdetailComponent implements OnInit {
   private request:any;
+
+  typeReq:any;
   product: any;
   productSub: Subscription;
 
@@ -36,16 +39,27 @@ export class ProductdetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private productTypeService:ProducttypeService,
+    private location: Location,
 
-  ngOnInit(): void {
+    ) { }
+
+    ngOnInit(): void {
     this.productSub = this.route.params.subscribe(params => {
       const id = params['id'];
+      console.log(this.route)
 
       if (id) {
+
         this.request = this.productService.get(id).subscribe((prod: any) => {
           if (prod) {
             this.product = prod[0];
+
+            this.productTypeService.get(this.product.type_id).subscribe((pt: any) => {
+              this.typeReq = pt[0]
+              this.productForm.controls.type_id.setValue(this.typeReq.description);
+            });
 
             let entrydate:any = null;
             let lastUpdate:any = null;
@@ -59,10 +73,10 @@ export class ProductdetailComponent implements OnInit {
               soldDate = formatDate(this.product.soldDate, 'yyyy-MM-dd', 'en-US')
             }
 
-
             this.productForm.controls.store_id.setValue(this.product.store_id);
-            this.productForm.controls.type_id.setValue(this.product.type_id);
+            //this.productForm.controls.type_id.setValue(this.product.type_id);
             this.productForm.controls.material_id.setValue(this.product.material_id);
+
             this.productForm.controls.reference.setValue(this.product.reference);
             this.productForm.controls.description.setValue(this.product.description);
             this.productForm.controls.state.setValue(this.product.state);
@@ -73,8 +87,8 @@ export class ProductdetailComponent implements OnInit {
             this.productForm.controls.insertedBy.setValue(this.product.insertedBy);
             this.productForm.controls.weight.setValue(this.product.weight);
             this.productForm.controls.price.setValue(this.product.price);
-            console.log(this.product, this.productForm.value)
-          } else {
+          }
+          else {
             this.gotoList();
           }
         });
@@ -82,12 +96,17 @@ export class ProductdetailComponent implements OnInit {
     });
   }
 
+
   ngOnDestroy() {
     //this.request.unsubscribe();
   }
 
   gotoList() {
     this.router.navigate(['/products']);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

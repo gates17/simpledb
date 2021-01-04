@@ -1,7 +1,9 @@
+import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-productcreate',
@@ -11,6 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductcreateComponent implements OnInit {
   private request:any;
   product: string;
+  access_token:any;
+  types:any;
+
   //productSub: Subscription;
   productForm = new FormGroup({
     store_id:  new FormControl(null),
@@ -56,10 +61,20 @@ export class ProductcreateComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productCreateService: ProductService
+    private productCreateService: ProductService,
+    private productTypeService: ProducttypeService,
+    private location: Location,
+
   ) { }
 
   ngOnInit() {
+
+    this.access_token= sessionStorage.getItem('access_token')
+    this.productTypeService.getAll(this.access_token).subscribe(
+      result => {
+      this.types = result;
+      console.log(result)
+    });
   }
 
   ngOnDestroy() {
@@ -72,9 +87,14 @@ export class ProductcreateComponent implements OnInit {
 
   createProduct() {
     //this.request =
+    console.log(this.productForm.value)
     this.productCreateService.create(this.productForm.value).subscribe(result => {
       this.gotoList();
     }, error => console.error(error));
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

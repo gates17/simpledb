@@ -16,7 +16,10 @@
     </div>
       <!-- tipo -->
     <div class="md-form mt-0">
-      <input type="number" formControlName="type_id" placeholder="Tipo de Produto" class="form-control" >
+      <select class="browser-default custom-select form-control" formControlName="type_id" style="width: 200px;" >
+        <option>Tipo de Produto</option>
+        <option *ngFor="let type of this.types" [ngValue]="type.id">{{ type.description }}</option>
+      </select>
     </div>
     <!-- material -->
     <div class="md-form mt-0">
@@ -85,7 +88,7 @@
         </button>
       </div>
       <div class="flex-item">
-        <button btn color="danger"  block="true" class="my-4" routerLink="/products" type="submit" title="Cancelar">Cancelar
+        <button btn color="danger"  block="true" class="my-4" (click)="goBack()" type="submit" title="Cancelar">Cancelar
           <i class="fa fa-remove" aria-hidden="true"></i>
         </button>
       </div>

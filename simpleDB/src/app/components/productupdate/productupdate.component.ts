@@ -1,9 +1,10 @@
+import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DatePipe, formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class ProductupdateComponent implements OnInit {
   private request:any;
   product: any;
   productSub: Subscription;
-
+  access_token:any;
+  types:any;
 
   productForm = new FormGroup({
     store_id:  new FormControl(null),
@@ -37,12 +39,20 @@ export class ProductupdateComponent implements OnInit {
     //private datePipe: DatePipe,
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private productTypeService: ProducttypeService,
+    private location: Location
   ) { }
 
   ngOnInit() {
     this.productSub = this.route.params.subscribe(params => {
       const id = params['id'];
+
+      this.productTypeService.getAll(this.access_token).subscribe(
+        result => {
+        this.types = result;
+        console.log(result)
+      });
 
       if (id) {
         this.request = this.productService.get(id).subscribe((prod: any) => {
@@ -52,7 +62,7 @@ export class ProductupdateComponent implements OnInit {
             let entrydate:any = null;
             let lastUpdate:any = null;
             let soldDate:any = null;
-            if(this.product.entryDate !== null){
+            if(this.product.entryDate){
               entrydate = formatDate(this.product.entryDate, 'yyyy-MM-dd', 'en-US')
             }
             if(this.product.lastUpdate !== null){
@@ -90,6 +100,10 @@ export class ProductupdateComponent implements OnInit {
 
   gotoList() {
     this.router.navigate(['/products']);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   createProduct() {

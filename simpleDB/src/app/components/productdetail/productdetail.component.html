@@ -4,7 +4,7 @@
 
         <!-- loja -->
         <div class="md-form mt-0">
-          <input type="number" formControlName="store_id" placeholder="Loja" class="form-control disabled"  >
+          <input type="text" formControlName="store_id" placeholder="Loja" class="form-control disabled"  >
     <!--
           <div  *ngFor="let validation of validation_messages.name">
             <span class="help-block form-error text-danger"
@@ -16,11 +16,11 @@
         </div>
           <!-- tipo -->
         <div class="md-form mt-0">
-          <input type="number" formControlName="type_id" placeholder="Tipo de Produto" class="form-control disabled" >
+          <input type="text" formControlName="type_id" placeholder="Tipo de Produto" class="form-control disabled" >
         </div>
         <!-- material -->
         <div class="md-form mt-0">
-          <input type="number" formControlName="material_id" placeholder="Material" class="form-control disabled" >
+          <input type="text" formControlName="material_id" placeholder="Material" class="form-control disabled" >
 
         </div>
         <!-- referencia -->
@@ -82,7 +82,7 @@
             </button>
           </div>
           <div class="flex-item">
-            <button btn color="danger"  block="true" class="my-4" routerLink="/products" type="submit" title="Cancelar">Cancelar
+            <button btn color="danger"  block="true" class="my-4" (click)="goBack()" type="submit" title="Cancelar">Cancelar
               <i class="fa fa-remove" aria-hidden="true"></i>
             </button>
           </div>

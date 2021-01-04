@@ -17,6 +17,14 @@ export class ProducttypeComponent implements OnInit {
 
   p: number = 1;
 
+  options = [
+    { value: '1', label: '10' },
+    { value: '2', label: '25' },
+    { value: '3', label: '50' },
+  ];
+  default=1;
+
+  itemsTotal = 10;
   constructor(
     private productTypeService: ProducttypeService,
     private router: Router,
@@ -29,6 +37,10 @@ export class ProducttypeComponent implements OnInit {
 
   gotoLogin(){
     this.router.navigate(['/login']);
+  }
+
+  pageItems(event: any){
+    this.itemsTotal=event.target.value
   }
 
   readProductproductType(): void {

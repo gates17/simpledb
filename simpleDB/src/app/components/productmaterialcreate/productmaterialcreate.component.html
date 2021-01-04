@@ -1,1 +1,27 @@
-<p>productmaterialcreate works!</p>
+    <div class="container products-container">
+      <form [formGroup]="productForm" (ngSubmit)="createProduct()">
+
+
+        <!-- descrição -->
+        <div class="md-form mt-0">
+          <input type="text" formControlName="description" placeholder="Descrição"class="form-control" >
+        </div>
+
+
+
+        <!-- ACÇÕES -->
+        <div class="col-md-3 flex-center">
+          <div class="flex-item">
+            <button btn color="success" block="true" class="my-4" type="submit" title="Guardar">Guardar
+              <i class="fa fa-save" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="flex-item">
+            <button btn color="danger"  block="true" class="my-4" (click)="goBack()" type="submit" title="Cancelar">Cancelar
+              <i class="fa fa-remove" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>

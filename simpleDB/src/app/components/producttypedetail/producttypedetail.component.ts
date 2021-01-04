@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 
 
 @Component({
@@ -36,7 +36,9 @@ export class ProducttypedetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private location:Location,
+  ) { }
 
   ngOnInit(): void {
     this.productSub = this.route.params.subscribe(params => {
@@ -88,6 +90,10 @@ export class ProducttypedetailComponent implements OnInit {
 
   gotoList() {
     this.router.navigate(['/products']);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

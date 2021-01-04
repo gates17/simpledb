@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductmaterialService } from 'src/app/services/productmaterial.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-productmaterialcreate',
@@ -7,43 +10,70 @@ import { ProductmaterialService } from 'src/app/services/productmaterial.service
   styleUrls: ['./productmaterialcreate.component.scss']
 })
 export class ProductmaterialcreateComponent implements OnInit {
+  private request:any;
+  product: string;
+  access_token:any;
+  types:any;
 
-  product = {
-    name: '',
-    description: '',
-    available: false
-  };
-  submitted = false;
+  //productSub: Subscription;
+  productForm = new FormGroup({
+    description:  new FormControl(null),
+     /*
+    name: new FormControl('', [Validators.required,Validators.maxLength(255)]),
+    tlf: new FormControl('', [ Validators.required, Validators.max(999999999), Validators.min(900000000)]),
+   */
+  })
 
-  constructor(private productmaterialService: ProductmaterialService) { }
+  validation_messages = {
+    'name': [
+      { type: 'required', message: 'É necessário inserir o nome' },
+      { type: 'size', message: 'Deve inserir no máximo ate 255 caracteres'}
+    ],
+    'tlf': [
+      { type: 'size', message: 'Insira um contacto com 9 digitos'},
+      { type: 'required', message: 'É necessário inserir um contacto'  }
+    ],
+    'address': [
+      { type: 'size', message: 'Insira uma morada até 1024 caracteres'},
+    ],
+    'zip_code': [
+      { type: 'size', message: 'Insira um código postal até 16 digitos'},
+    ],
+    'localidade': [
+      { type: 'size', message: 'Insira uma localidade até 16 digitos'},
+    ]
 
-  ngOnInit(): void {
+    }
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private productMaterialService: ProductmaterialService,
+    private location: Location,
+  ) { }
+
+  ngOnInit() {
+
   }
 
-  createProduct(): void {
-    const data = {
-      name: this.product.name,
-      description: this.product.description
-    };
-
-    this.productmaterialService.create(data)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.submitted = true;
-        },
-        error => {
-          console.log(error);
-        });
+  ngOnDestroy() {
+    //this.request.unsubscribe();
   }
 
-  newProduct(): void {
-    this.submitted = false;
-    this.product = {
-      name: '',
-      description: '',
-      available: false
-    };
+  gotoList() {
+    this.router.navigate(['/products']);
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  createProduct() {
+    //this.request =
+    console.log(this.productForm.value)
+    this.productMaterialService.create(this.productForm.value).subscribe(result => {
+      this.gotoList();
+    }, error => console.error(error));
   }
 
 }
