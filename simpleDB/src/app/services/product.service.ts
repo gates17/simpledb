@@ -40,6 +40,10 @@ export class ProductService {
     return this.httpClient.delete(`${baseURL}/${id}`);
   }
 
+  softDelete(id, data): Observable<any> {
+    return this.httpClient.put(`${baseURL}/${id}`, data);
+  }
+
   deleteAll(): Observable<any> {
     return this.httpClient.delete(baseURL);
   }

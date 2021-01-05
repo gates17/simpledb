@@ -1,6 +1,9 @@
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormControl, FormGroup } from '@angular/forms';
+import { resourceLimits } from 'worker_threads';
 
 @Component({
   selector: 'app-product',
@@ -10,6 +13,7 @@ import { Router } from '@angular/router';
 export class ProductComponent implements OnInit {
   access_token: any;
   product: any;
+  pDel: any;
   currentProduct = null;
   currentIndex = -1;
   name = '';
@@ -24,9 +28,13 @@ export class ProductComponent implements OnInit {
   default=1;
   itemsTotal = 10;
 
+  productForm = new FormGroup({
+    removed:  new FormControl(null),
+  })
   constructor(
     private productService: ProductService,
     private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +45,10 @@ export class ProductComponent implements OnInit {
 
   gotoLogin(){
     this.router.navigate(['/login']);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   pageItems(event: any){
@@ -53,6 +65,23 @@ export class ProductComponent implements OnInit {
 
           this.gotoLogin();
         });
+  }
+  softDelete(id){
+    this.productService.get(id).subscribe(result => {
+      this.pDel = result[0]
+      console.log(this.pDel)
+      console.log(this.productForm.controls.removed.value)
+      if(this.pDel.removed === 0)
+            this.productForm.controls.removed.setValue(1);
+          else{
+            this.productForm.controls.removed.setValue(0);
+          }
+      console.log(this.productForm.controls.removed.value)
+
+    })
+    this.productService.softDelete(id, this.productForm.value).subscribe(result => {
+      this.router.navigate(['/dashboard']);
+    }, error => console.error(error));
   }
 
 }

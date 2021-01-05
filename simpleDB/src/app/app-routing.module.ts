@@ -1,3 +1,5 @@
+import { AuthGuardGuard } from './auth/auth-guard.guard';
+import { ProductdeleteComponent } from './components/productdelete/productdelete.component';
 
 
 
@@ -23,24 +25,26 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 // import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
-  { path:  '', redirectTo:  'login', pathMatch:  'full' },
+  { path:  '',component: LoginComponent},
 
-  { path: 'products', component: ProductComponent },
-  { path: 'products/detail/:id', component: ProductdetailComponent },
-  { path: 'products/create', component: ProductcreateComponent },
-  { path: 'products/update/:id', component: ProductupdateComponent },
+  { path: 'products', component: ProductComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'products/detail/:id', component: ProductdetailComponent, canActivate: [AuthGuardGuard] },
+  { path: 'products/create', component: ProductcreateComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'products/update/:id', component: ProductupdateComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'products/delete/:id', component: ProductdeleteComponent, canActivate: [AuthGuardGuard] },
 
-  { path: 'productmaterial', component: ProductmaterialComponent },
-  { path: 'productmaterial/detail/:id', component: ProductmaterialdetailComponent },
-  { path: 'productmaterial/create', component: ProductmaterialcreateComponent },
-  { path: 'productmaterial/update/:id', component: ProductmaterialupdateComponent },
+  { path: 'productmaterial', component: ProductmaterialComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'productmaterial/detail/:id', component: ProductmaterialdetailComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'productmaterial/create', component: ProductmaterialcreateComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'productmaterial/update/:id', component: ProductmaterialupdateComponent, canActivate: [AuthGuardGuard] },
 
-  { path: 'producttype', component: ProducttypeComponent },
-  { path: 'producttype/detail/:id', component: ProducttypedetailComponent },
-  { path: 'producttype/create', component: ProducttypecreateComponent },
-  { path: 'producttype/update/:id', component: ProducttypeupdateComponent },
+  { path: 'producttype', component: ProducttypeComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'producttype/detail/:id', component: ProducttypedetailComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'producttype/create', component: ProducttypecreateComponent, canActivate: [AuthGuardGuard]  },
+  { path: 'producttype/update/:id', component: ProducttypeupdateComponent, canActivate: [AuthGuardGuard]  },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: SidebarComponent}
+  { path: 'dashboard', component: SidebarComponent, canActivate: [AuthGuardGuard], },
+  {path: '**', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({
