@@ -1,97 +1,102 @@
-    <div class="container products-container">
-      <form [formGroup]="productForm" (ngSubmit)="createProduct()">
+<div class="container products-container">
+  <form [formGroup]="productForm" (ngSubmit)="createProduct()" id="pform">
 
 
-        <!-- loja -->
-        <div class="md-form mt-0">
-          <input type="number" formControlName="store_id" placeholder="Loja" class="form-control"  >
-    <!--
-          <div  *ngFor="let validation of validation_messages.name">
-            <span class="help-block form-error text-danger"
-              *ngIf="productForm.controls['name'].touched
-              && productForm.controls['name'].errors?.maxlength ">{{validation.message}}
-            </span>
-          </div>
-    -->
-        </div>
-          <!-- tipo <input type="number" formControlName="type_id" placeholder="Tipo de Produto" class="form-control" > -->
-        <div class="md-form mt-0">
-
-
-<select class="browser-default custom-select form-control" formControlName="type_id" style="width: 200px;" >
-  <option>Tipo de Produto</option>
-  <option *ngFor="let type of this.types" [ngValue]="type.id">{{ type.description }}</option>
-</select>
-        </div>
-        <!-- material -->
-        <div class="md-form mt-0">
-          <input type="number" formControlName="material_id" placeholder="Material" class="form-control" >
-
-        </div>
-        <!-- referencia -->
-        <div class="md-form mt-0">
-          <input type="number" formControlName="reference" placeholder="Referência" class="form-control" >
-
-        </div>
-        <!-- descrição -->
-        <div class="md-form mt-0">
-          <input type="text" formControlName="description" placeholder="Descrição"class="form-control" >
-
-        <!-- estado -->
-        </div>
-            <div class="md-form mt-0">
-          <input type="text" formControlName="state" placeholder="Estado" class="form-control" >
-
-        </div>
-        <!-- data de criação -->
-        <div class="md-form mt-0">
-          <input type="date" formControlName="entryDate"  placeholder="Data de entrada" class="form-control" >
-
-        </div>
-        <!-- data de atualização -->
-        <div class="md-form mt-0">
-          <input type="date" formControlName="lastUpdate" placeholder="Data de atualização" class="form-control" >
-
-        </div>
-        <!-- data de venda -->
-        <div class="md-form mt-0">
-          <input type="date" formControlName="soldDate" placeholder="Descrição" class="form-control" >
-
-        </div>
-          <!-- vendedor -->
-        <div class="md-form mt-0">
-          <input type="text" formControlName="seller" placeholder="Vendedor" class="form-control" >
-
-        </div>
-        <!-- inserido por -->
-        <div class="md-form mt-0">
-          <input type="text" formControlName="insertedBy"  placeholder="Inserido por" class=" form-control" >
-
-        </div>
-        <!-- peso -->
-        <div class="md-form mt-0">
-          <input type="number" formControlName="weight" placeholder="Peso" class="form-control" >
-
-        </div>
-        <!-- preço -->
-        <div class="md-form mt-0">
-          <input type="number" formControlName="price" placeholder="Preço" class="form-control" >
-
-        </div>
-
-        <!-- ACÇÕES -->
-        <div class="col-md-3 flex-center">
-          <div class="flex-item">
-            <button btn color="success" block="true" class="my-4" type="submit" title="Guardar">Guardar
-              <i class="fa fa-save" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div class="flex-item">
-            <button btn color="danger"  block="true" class="my-4" (click)="goBack()" type="submit" title="Cancelar">Cancelar
-              <i class="fa fa-remove" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-      </form>
+    <!-- loja -->
+    <div class="md-form mt-0">
+      <input type="number" formControlName="store_id" placeholder="Loja" class="form-control"  >
+<!--
+      <div  *ngFor="let validation of validation_messages.name">
+        <span class="help-block form-error text-danger"
+          *ngIf="productForm.controls['name'].touched
+          && productForm.controls['name'].errors?.maxlength ">{{validation.message}}
+        </span>
+      </div>
+-->
     </div>
+      <!-- tipo <input type="number" formControlName="type_id" placeholder="Tipo de Produto" class="form-control" > -->
+
+
+    <label>Escolha o tipo de Produto</label>
+    <div class="md-form mt-0">
+
+      <select class="browser-default custom-select form-control" formControlName="type_id" style="width: 200px;" >
+        <!--<option  [selected]="true" [disabled]="true" >Tipo de Produto</option>-->
+        <option *ngFor="let type of this.types" [ngValue]="type.id">{{ type.description }}</option>
+      </select>
+    </div>
+    <!-- material -->
+    <div class="md-form mt-0">
+      <input type="number" formControlName="material_id" placeholder="Material" class="form-control" >
+
+    </div>
+    <!-- referencia -->
+    <div class="md-form mt-0">
+      <input type="number" formControlName="reference" placeholder="Referência" class="form-control" >
+
+    </div>
+    <!-- descrição -->
+    <div class="md-form mt-0">
+      <input type="text" formControlName="description" placeholder="Descrição"class="form-control" >
+
+    <!-- estado -->
+    </div>
+        <div class="md-form mt-0">
+      <input type="text" formControlName="state" placeholder="Estado" class="form-control" >
+
+    </div>
+    <!-- data de criação -->
+    <div class="md-form mt-0">
+      <input type="date" formControlName="entryDate"  placeholder="Data de entrada" class="form-control" >
+
+    </div>
+    <!-- data de atualização -->
+    <div class="md-form mt-0">
+      <input type="date" formControlName="lastUpdate" placeholder="Data de atualização" class="form-control" >
+
+    </div>
+    <!-- data de venda -->
+    <div class="md-form mt-0">
+      <input type="date" formControlName="soldDate" placeholder="Descrição" class="form-control" >
+
+    </div>
+      <!-- vendedor -->
+    <div class="md-form mt-0">
+      <input type="text" formControlName="seller" placeholder="Vendedor" class="form-control" >
+
+    </div>
+    <!-- inserido por -->
+    <div class="md-form mt-0">
+      <input type="text" formControlName="insertedBy"  placeholder="Inserido por" class=" form-control" >
+
+    </div>
+    <!-- peso -->
+    <div class="md-form mt-0">
+      <input type="number" formControlName="weight" placeholder="Peso" class="form-control" >
+
+    </div>
+    <!-- preço -->
+    <div class="md-form mt-0">
+      <input type="number" formControlName="price" placeholder="Preço" class="form-control" >
+
+    </div>
+
+
+
+  </form>
+
+</div>
+      <!-- ACÇÕES -->
+<div class="flex-center actions">
+  <div class="flex-item">
+    <button mdbBtn color="success" block="true" class="my-4" type="submit" title="Guardar">
+      <i class="fa fa-save" aria-hidden="true"></i>
+      Guardar
+    </button>
+  </div>
+  <div class="flex-item">
+    <button mdbBtn color="danger"  block="true" class="my-4" (click)="goBack()" type="submit" title="Cancelar">Cancelar
+      <i class="fa fa-remove" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

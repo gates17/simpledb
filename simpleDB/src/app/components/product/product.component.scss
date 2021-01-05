@@ -161,3 +161,22 @@ table.dataTable {
 .py-5{
   background-color: #eaecef;
 }
+
+div[name="paginationOptions"] {
+  margin: 0px;
+}
+
+.actions{
+  display: flex !important ;
+}
+
+.custom-select{
+  -ms-transform: translate(10%, 15%);
+  transform: translate(10%, 15%) !important;
+}
+
+
+#pr{
+  -ms-transform: translate(10%, 20%);
+  transform: translate(10%, 20%) !important;
+}

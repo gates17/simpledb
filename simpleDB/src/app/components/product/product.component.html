@@ -6,7 +6,7 @@
           <tr>
             <th>Id</th>
             <th>Descrição</th>
-            <th>Actions</th>
+            <th>Acções</th>
           </tr>
         </thead>
         <tbody>
@@ -21,21 +21,24 @@
             </td>
             <td>{{item.description}}</td>
             <td>
-            <div class="dropdown actions">
-              <button class="btn btn-sm btn-icon" [routerLink]="['/products/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
-              <button class="btn btn-sm btn-icon" [routerLink]="['/products/detail', item.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
-            </div>
+              <div class="dropdown actions">
+                <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/products/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
+                <button mdbBtn color="danger" class="btn btn-sm btn-icon" [routerLink]="['/products/detail', item.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
+              </div>
 
             </td>
           </tr>
 
         </tbody>
       </table>
-          <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>
+        <div class="row justify-content-between" name="paginationOptions">
 
           <select class="browser-default custom-select" style="width: 60px;" (change)="pageItems($event)">
             <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
           </select>
+          <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>
+          <button mdbBtn color="primary" [routerLink]="['/products/create']">Criar novo</button>
+        </div>
     </div>
   </div>
 </div>

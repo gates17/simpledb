@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'products/update/:id', component: ProductupdateComponent },
 
   { path: 'productmaterial', component: ProductmaterialComponent },
-  { path: 'productmaterial/:id', component: ProductmaterialdetailComponent },
+  { path: 'productmaterial/detail/:id', component: ProductmaterialdetailComponent },
   { path: 'productmaterial/create', component: ProductmaterialcreateComponent },
   { path: 'productmaterial/update/:id', component: ProductmaterialupdateComponent },
 

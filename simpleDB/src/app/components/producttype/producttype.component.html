@@ -1,19 +1,18 @@
-<div class="container text-center">
+<div class="container ">
   <div class="row py-5">
     <div class="col-12">
-
       <table id="example" class="table table-hover responsive nowrap" style="width:100%">
         <thead>
           <tr>
             <th>Id</th>
             <th>Descrição</th>
-            <th>Actions</th>
+            <th>Acções</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of productType | paginate: { itemsPerPage: itemsTotal, currentPage: p, id: 'pt' }">
             <td>
-              <a href="#">
+              <a  [routerLink]="['/producttype/detail/', item.id ]">
                 <div class="d-flex align-items-center">
                   <div class="avatar avatar-blue mr-3">{{item.id}}</div>
 
@@ -23,22 +22,24 @@
             <td>{{item.description}}</td>
             <td>
               <div class="dropdown actions">
-                  <button class="btn btn-sm btn-icon" [routerLink]="['/producttype/create']"><i class="bx bxs-pencil mr-2"></i> Editar</button>
-                  <button class="btn btn-sm btn-icon" [routerLink]="['/producttype/detail']"><i class="bx bxs-trash mr-2"></i> Apagar</button>
-                </div>
+                <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/producttype/create']"><i class="bx bxs-pencil mr-2"></i> Editar</button>
+                <button mdbBtn color="danger" class="btn btn-sm btn-icon" [routerLink]="['/producttype/detail']"><i class="bx bxs-trash mr-2"></i> Apagar</button>
+              </div>
             </td>
           </tr>
 
         </tbody>
       </table>
-          <pagination-controls id="pt" (pageChange)="p = $event">
 
-          </pagination-controls>
+        <div class="row justify-content-between" name="paginationOptions">
 
           <select class="browser-default custom-select" style="width: 60px;" (change)="pageItems($event)">
             <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
           </select>
+          <pagination-controls id="pt" (pageChange)="p = $event"></pagination-controls>
+          <button mdbBtn color="primary" [routerLink]="['/producttype/create']">Criar novo</button>
 
+        </div>
 
 
     </div>

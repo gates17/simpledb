@@ -167,3 +167,22 @@ table.dataTable {
 .actions{
   display: flex !important ;
 }
+
+div[name="paginationOptions"] {
+  margin: 0px;
+}
+
+.actions{
+  display: flex !important ;
+}
+
+.custom-select{
+  -ms-transform: translate(10%, 15%);
+  transform: translate(10%, 15%) !important;
+}
+
+
+#pt{
+  -ms-transform: translate(10%, 20%);
+  transform: translate(10%, 20%) !important;
+}

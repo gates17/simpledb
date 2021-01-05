@@ -73,7 +73,6 @@ export class ProductcreateComponent implements OnInit {
     this.productTypeService.getAll(this.access_token).subscribe(
       result => {
       this.types = result;
-      console.log(result)
     });
   }
 
@@ -87,7 +86,6 @@ export class ProductcreateComponent implements OnInit {
 
   createProduct() {
     //this.request =
-    console.log(this.productForm.value)
     this.productCreateService.create(this.productForm.value).subscribe(result => {
       this.gotoList();
     }, error => console.error(error));
