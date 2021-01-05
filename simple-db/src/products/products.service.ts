@@ -6,15 +6,7 @@ export class ProductsService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
   async findAll(): Promise<any> {
-    let products = [];
-    const trx = await this.knex.transaction();
-    try {
-      products = await trx.table('product').select().from('product');
-      trx.commit();
-    } catch {
-      trx.rollback();
-    }
-    return products;
+    return await this.knex.table('product').select('*').where('removed', 0);
   }
 
   async create(body: any): Promise<any> {
@@ -32,5 +24,9 @@ export class ProductsService {
 
   async delete(id: number): Promise<any> {
     return await this.knex('product').where('id', id).del();
+  }
+
+  async softDelete(id: number, rm: boolean): Promise<any> {
+    return await this.knex('product').where('id', id).update('removed', rm);
   }
 }
