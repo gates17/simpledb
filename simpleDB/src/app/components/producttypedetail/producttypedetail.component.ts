@@ -96,4 +96,7 @@ export class ProducttypedetailComponent implements OnInit {
     this.location.back();
   }
 
+  update( ){
+    this.router.navigate(['producttype/update/'+this.product.id])
+  }
 }

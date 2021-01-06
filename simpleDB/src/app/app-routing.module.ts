@@ -25,7 +25,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 // import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
-  { path:  '',component: LoginComponent},
+  { path:  '',redirectTo: 'login', pathMatch:'full'},
 
   { path: 'products', component: ProductComponent, canActivate: [AuthGuardGuard]  },
   { path: 'products/detail/:id', component: ProductdetailComponent, canActivate: [AuthGuardGuard] },
@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'producttype/update/:id', component: ProducttypeupdateComponent, canActivate: [AuthGuardGuard]  },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: SidebarComponent, canActivate: [AuthGuardGuard], },
-  {path: '**', redirectTo: 'login', pathMatch: 'full'}
+  {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 
 @NgModule({

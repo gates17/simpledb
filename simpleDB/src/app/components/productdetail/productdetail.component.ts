@@ -55,6 +55,7 @@ export class ProductdetailComponent implements OnInit {
         this.request = this.productService.get(id).subscribe((prod: any) => {
           if (prod) {
             this.product = prod[0];
+            console.log(this.product)
 
             this.productTypeService.get(this.product.type_id).subscribe((pt: any) => {
               this.typeReq = pt[0]
@@ -109,4 +110,7 @@ export class ProductdetailComponent implements OnInit {
     this.location.back();
   }
 
+  update( ){
+    this.router.navigate(['products/update/'+this.product.id])
+  }
 }

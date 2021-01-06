@@ -62,4 +62,9 @@ export class ProductmaterialdetailComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+
+  update( ){
+    this.router.navigate(['productmaterial/update/'+this.product.id])
+  }
 }
