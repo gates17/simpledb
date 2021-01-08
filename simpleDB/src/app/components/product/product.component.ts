@@ -17,6 +17,7 @@ export class ProductComponent implements OnInit {
   currentProduct = null;
   currentIndex = -1;
   name = '';
+  searchresults: any = [];
 
   p: number = 1;
 
@@ -39,7 +40,6 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
-    console.log('nginit')
     this.readProduct();
   }
 
@@ -69,19 +69,38 @@ export class ProductComponent implements OnInit {
   softDelete(id){
     this.productService.get(id).subscribe(result => {
       this.pDel = result[0]
-      console.log(this.pDel)
-      console.log(this.productForm.controls.removed.value)
       if(this.pDel.removed === 0)
             this.productForm.controls.removed.setValue(1);
           else{
             this.productForm.controls.removed.setValue(0);
           }
-      console.log(this.productForm.controls.removed.value)
 
     })
     this.productService.softDelete(id, this.productForm.value).subscribe(result => {
       this.router.navigate(['/dashboard']);
     }, error => console.error(error));
+  }
+
+  search(event: any){
+    let prod: any;
+    let searchresults: any = [];
+    let searchParam = event.target.value;
+    console.log(this.product)
+    console.log(searchParam)
+    if(searchParam === "") { this.searchresults = []}
+    if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
+    {
+      for(prod of this.product){
+        for(let key in prod) {
+          let value = prod[key]
+            if (value && value.toString() && value.toString().includes(searchParam.toString())) {
+              searchresults.push(prod)
+            }
+        }
+      }
+      this.searchresults=searchresults
+      console.log(searchresults)
+    }
   }
 
 }

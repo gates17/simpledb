@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 const baseURL = 'http://localhost:3000/auth/login';
 
@@ -20,7 +21,10 @@ export class LoginService {
   redirectUrl: string;
   public isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    ) { }
 
   post(data): Observable<any> {
     console.log(this.isLoggedIn)
@@ -34,5 +38,6 @@ export class LoginService {
     this.email = null;
     */
     this.isLoggedIn.next(false);
+    this.router.navigate(['/']);
   }
 }

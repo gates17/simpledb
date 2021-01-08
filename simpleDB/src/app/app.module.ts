@@ -26,6 +26,9 @@ import { ProducttypedeleteComponent } from './components/producttypedelete/produ
 import { ProducttypecreateComponent } from './components/producttypecreate/producttypecreate.component';
 import { ProducttypedetailComponent } from './components/producttypedetail/producttypedetail.component';
 import { ProducttypeupdateComponent } from './components/producttypeupdate/producttypeupdate.component';
+import { SalesHistoryComponent } from './components/sales-history/sales-history.component';
+import { SearchComponent } from './components/search/search.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { ProducttypeupdateComponent } from './components/producttypeupdate/produ
     ProducttypedeleteComponent,
     ProducttypecreateComponent,
     ProducttypedetailComponent,
-    ProducttypeupdateComponent
+    ProducttypeupdateComponent,
+    SalesHistoryComponent,
+    SearchComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -33,6 +33,7 @@ export class ProductupdateComponent implements OnInit {
     insertedBy:  new FormControl(null),
     weight:  new FormControl(null),
     price:  new FormControl(null),
+ //   removed:  new FormControl(null),
   })
 
   constructor(
@@ -85,6 +86,7 @@ export class ProductupdateComponent implements OnInit {
             this.productForm.controls.insertedBy.setValue(this.product.insertedBy);
             this.productForm.controls.weight.setValue(this.product.weight);
             this.productForm.controls.price.setValue(this.product.price);
+//            this.productForm.controls.removed.setValue(this.product.removed);
             console.log(this.product, this.productForm.value)
           } else {
             this.gotoList();
@@ -109,6 +111,7 @@ export class ProductupdateComponent implements OnInit {
   createProduct() {
     //this.request =
     this.productService.update(this.product.id, this.productForm.value).subscribe(result => {
+      console.log('teste')
       this.gotoList();
     }, error => console.error(error));
   }

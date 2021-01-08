@@ -1,7 +1,5 @@
-<h1>Orion SimpleDB</h1>
 
 <div class="tabordion">
-  <button mdbBtn>Logout / Sair</button>
   <section id="section1">
     <input type="radio" name="sections" id="option1" checked>
     <label for="option1">Produtos</label>
@@ -28,6 +26,15 @@
     <article>
       <div class="container" name="tabcontainer">
         <app-productmaterial></app-productmaterial>
+      </div>
+    </article>
+  </section>
+  <section id="section3">
+    <input type="radio" name="sections" id="option3">
+    <label for="option3">Historico de Vendas</label>
+    <article>
+      <div class="container" name="tabcontainer">
+        <app-sales-history></app-sales-history>
       </div>
     </article>
   </section>

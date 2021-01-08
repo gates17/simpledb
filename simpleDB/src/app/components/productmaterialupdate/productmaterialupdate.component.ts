@@ -18,19 +18,9 @@ export class ProductmaterialupdateComponent implements OnInit {
   types:any;
 
   productForm = new FormGroup({
-    store_id:  new FormControl(null),
-    type_id:  new FormControl(null),
-    material_id:  new FormControl(null),
-    reference:  new FormControl(null),
+
     description:  new FormControl(null),
-    state:  new FormControl(null),
-    entryDate:  new FormControl(null),
-    lastUpdate:  new FormControl(null),
-    soldDate:  new FormControl(null),
-    seller:  new FormControl(null),
-    insertedBy:  new FormControl(null),
-    weight:  new FormControl(null),
-    price:  new FormControl(null),
+
   })
 
   constructor(
