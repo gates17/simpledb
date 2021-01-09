@@ -180,3 +180,27 @@ div[name="paginationOptions"] {
   -ms-transform: translate(10%, 20%);
   transform: translate(10%, 20%) !important;
 }
+
+.suggestion-list{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  list-style-type: none;
+  padding: 0;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+  background-color:white;
+}
+
+li {
+  padding: 0.5em;
+  line-height: 30px;
+}
+.wrapper{
+  padding: 20px;
+}
+li:hover{
+  background-color:#a560f3;
+  cursor : pointer;
+  color:white;
+}

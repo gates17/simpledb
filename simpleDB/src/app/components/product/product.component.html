@@ -7,11 +7,16 @@
         <div class="row mt-3">
           <div class="col-6">
 
-            <div class="autocomplete">
-              <input  class=" mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)">
-              <ul *ngIf="searchresults.length > 0" class="suggestion-list mt-2">
-                <li *ngFor="let result of searchresults">{{result.description}}</li>
-              </ul>
+            <!-- Dropdown -->
+            <div class="nav-item dropdown" dropdown>
+              <input dropdownToggle class=" mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)">
+              <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu" >
+                <div *ngIf="searchresults.length > 0" class="dropdown">
+                  <div *ngFor="let result of searchresults">
+                    <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -55,6 +60,7 @@
           </select>
           <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>
           <button mdbBtn color="primary" [routerLink]="['/products/create']">Criar novo</button>
+          <button mdbBtn color="primary" (click)="convertPdf()">Gerar Pdf</button>
         </div>
     </div>
   </div>

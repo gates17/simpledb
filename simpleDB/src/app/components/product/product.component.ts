@@ -1,9 +1,12 @@
+import { element } from 'protractor';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
-import { resourceLimits } from 'worker_threads';
+
+import jspdf from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-product',
@@ -103,4 +106,30 @@ export class ProductComponent implements OnInit {
     }
   }
 
+
+  convertPdf() {
+
+
+    var doc = new jspdf('l','mm','A4');
+    var col = [["Id", "loja","tipo de material","material","referencia","descrição","data de registo"," data de atualização ","data de venda", "vendedor", "criado por", "peso", "preço", "disponibilidade"]];
+    var rows = [];
+
+    this.product.forEach(element => {
+      let values = [];
+      for (let key in element ){
+        let value=element[key]
+        values.push(value)
+      }
+      rows.push(values);
+
+    });
+    //doc.autotable(col, rows);
+
+    (doc as any).autoTable({
+      head: col,
+      body: rows,
+    })
+
+    doc.save('Test.pdf');
+  }
 }
