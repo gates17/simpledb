@@ -17,6 +17,9 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { SalesHistoryController } from './sales-history/sales-history.controller';
+import { SalesHistoryService } from './sales-history/sales-history.service';
+import { SalesHistoryModule } from './sales-history/sales-history.module';
 
 @Module({
   imports: [
@@ -34,6 +37,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     ProductmaterialModule,
     UsersModule,
     AuthModule,
+    SalesHistoryModule,
   ],
   controllers: [
     AppController,
@@ -41,6 +45,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     ProducttypeController,
     ProductmaterialController,
     UsersController,
+    SalesHistoryController,
   ],
   providers: [
     AppService,
@@ -48,6 +53,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     ProductmaterialService,
     ProductsService,
     UsersService,
+    SalesHistoryService,
     /*{
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

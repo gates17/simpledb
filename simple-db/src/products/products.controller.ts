@@ -1,5 +1,5 @@
 // eslint-disable-next-line prettier/prettier
-import { Controller, Get, Post, Put, Delete, Param, Body,Patch } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -34,5 +34,10 @@ export class ProductsController {
   @Put(':id')
   async softRemove(@Param('id') id: number, @Body() rm): Promise<any> {
     return this.productService.softDelete(id, rm);
+  }
+
+  @Get('search/:sp')
+  async search(@Param('sp') sp: any): Promise<any> {
+    return this.productService.search(sp);
   }
 }

@@ -23,7 +23,7 @@ content-type: application/json
 
 #####
 
-GET http://localhost:3000/users/tico HTTP/1.1
+GET http://localhost:3000/products HTTP/1.1
 Accept-Language: en-GB,en-US;q=0.8,en;q=0.6,zh-CN;q=0.4
 content-type: application/json
 
@@ -48,7 +48,7 @@ curl http://localhost:3000/producttype  -H "Authorization: Bearer eyJhbGciOiJIUz
 
 #####
 
-POST http://localhost:3000/products/1 HTTP/1.1
+PUT  http://localhost:3000/products/1 HTTP/1.1
 content-type: application/json
 
 {
@@ -65,4 +65,13 @@ content-type: application/json
     "insertedBy": "",
     "weight": null,
     "price": null
+}    
+
+#####
+
+Put   http://localhost:3000/products/1 HTTP/1.1
+content-type: application/json
+
+{
+    "removed": true
 }    
