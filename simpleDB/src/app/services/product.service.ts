@@ -50,4 +50,8 @@ export class ProductService {
   searchByName(name): Observable<any> {
     return this.httpClient.get(`${baseURL}?name=${name}`);
   }
+
+  search(query): Observable<any> {
+    return this.httpClient.get(`${baseURL}/search/${query}`);
+  }
 }

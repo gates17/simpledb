@@ -20,8 +20,9 @@ export class ProductComponent implements OnInit {
   pDel: any;
   currentProduct = null;
   currentIndex = -1;
-  name = '';
+  searchquery;
   searchresults: any = [];
+
 
   p: number = 1;
 
@@ -116,6 +117,7 @@ export class ProductComponent implements OnInit {
     let prod: any;
     let searchresults: any = [];
     let searchParam = event.target.value;
+    this.searchquery = searchParam
     if(searchParam === "") { this.searchresults = []}
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
@@ -134,7 +136,12 @@ export class ProductComponent implements OnInit {
       this.searchresults=searchresults
     }
   }
+  fullMatchSearch(){
 
+    console.log('SEARCH')
+    console.log(this.searchresults)
+    this.router.navigate(['/search/'+ this.searchquery])
+  }
 
   convertPdf() {
 

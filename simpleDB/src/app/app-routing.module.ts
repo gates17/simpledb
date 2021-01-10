@@ -1,3 +1,4 @@
+import { SearchComponent } from './components/search/search.component';
 import { AuthGuardGuard } from './auth/auth-guard.guard';
 import { ProductdeleteComponent } from './components/productdelete/productdelete.component';
 
@@ -26,6 +27,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const routes: Routes = [
   { path:  '',redirectTo: 'login', pathMatch:'full'},
+
+  { path: 'search/:sp', component: SearchComponent, canActivate: [AuthGuardGuard]  },
 
   { path: 'products', component: ProductComponent, canActivate: [AuthGuardGuard]  },
   { path: 'products/detail/:id', component: ProductdetailComponent, canActivate: [AuthGuardGuard] },
