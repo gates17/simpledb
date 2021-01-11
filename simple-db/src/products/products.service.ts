@@ -40,7 +40,7 @@ export class ProductsService {
         id: 'product.id',
         store_id: 'product.store_id',
         type_id: 'product.type_id',
-        material_id:'product.material_id',
+        material_id: 'product.material_id',
         reference: 'product.reference',
         state: 'product.state',
         entryDate: 'product.entryDate',
@@ -50,10 +50,10 @@ export class ProductsService {
         insertedBy: 'product.insertedBy',
         weight: 'product.weight',
         price: 'product.price',
-        removed:'product.removed',
+        removed: 'product.removed',
         description: 'product.description',
         type_description: 'producttype.description',
-        t_id: 'producttype.id'
+        t_id: 'producttype.id',
       })
       .join('producttype', 'product.type_id', 'producttype.id')
       .where('product.description', 'like', `%${sp}%`)
