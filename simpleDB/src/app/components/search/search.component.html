@@ -2,27 +2,6 @@
   <div class="row py-5">
 
     <div class="col-12">
-
-      <div class="wrapper">
-        <div class="row mt-3">
-          <div class="col-6">
-
-            <!-- Dropdown -->
-            <div class="nav-item dropdown" dropdown>
-              <input dropdownToggle class=" mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)">
-              <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu" >
-                <div *ngIf="searchresults.length > 0" class="dropdown">
-                  <div *ngFor="let result of searchresults">
-                    <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
       <table id="example" class="table table-hover responsive nowrap" style="width:100%">
         <thead>
           <tr>

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   gotoList() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/products']);
   }
 
   login() {

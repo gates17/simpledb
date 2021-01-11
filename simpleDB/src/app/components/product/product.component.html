@@ -32,8 +32,10 @@
       <table id="example" class="table table-hover responsive nowrap" style="width:100%">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Referência</th>
             <th>Descrição</th>
+            <th>Preço</th>
+            <th>Criado por</th>
             <th>Acções</th>
           </tr>
         </thead>
@@ -42,12 +44,14 @@
             <td>
               <a [routerLink]="['/products/detail/', item.id ]">
                 <div class="d-flex align-items-center">
-                  <div class="avatar avatar-blue mr-3">{{item.id}}</div>
+                  <div class="avatar avatar-blue mr-3">{{item.reference}}</div>
 
                 </div>
               </a>
             </td>
             <td>{{item.description}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.insertedBy}}</td>
             <td>
               <div class="dropdown actions">
                 <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/products/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
