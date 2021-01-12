@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { KNEX_CONNECTION } from '@nestjsplus/knex';
+// import { attachPaginate } from 'knex-paginate';
 
 @Injectable()
 export class ProducttypeService {
@@ -7,11 +8,29 @@ export class ProducttypeService {
 
   async pages(itemsPerPage: number, pageNumber: number): Promise<any> {
     const x: number = +pageNumber;
-    return await this.knex
-      .table('producttype')
-      .select('*')
-      .limit(itemsPerPage)
-      .offset(x);
+    const total: number = await this.knex('producttype').count('*', {
+      as: 'total',
+    });
+    let totalPages: number = total[0].total / itemsPerPage;
+    totalPages = Math.ceil(totalPages);
+    const offset = (x - 1) * itemsPerPage;
+    const pageResults = await this.knex('producttype')
+      .offset(offset)
+      .limit(itemsPerPage);
+    let nextPage = 1;
+    if (x + 1 < totalPages) {
+      nextPage = x + 1;
+    } else {
+      nextPage = x;
+    }
+    let previousPage = 1;
+    if (x > 1) {
+      previousPage = x - 1;
+    } else {
+      previousPage = x;
+    }
+    const pagination = { totalPages, previousPage, nextPage, pageResults };
+    return pagination;
   }
 
   async findAll(): Promise<any> {

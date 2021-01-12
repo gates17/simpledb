@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { KNEX_CONNECTION } from '@nestjsplus/knex';
-import { promises } from 'fs';
 
 @Injectable()
 export class ProductsService {
@@ -16,7 +15,7 @@ export class ProductsService {
       .count('id')
       .where('removed', 0);
       */
-    //let Pages = total / itemsPerPage;
+    // let Pages = total / itemsPerPage;
     const products = await this.knex
       .table('product')
       .select('*')
@@ -40,7 +39,7 @@ export class ProductsService {
   }
 
   async update(id: number, body: any): Promise<any> {
-    //body["updatedAt"]=this.knex.fn.now();
+    // body["updatedAt"]=this.knex.fn.now();
     return await this.knex('product').where('id', id).update(body);
   }
 
@@ -70,10 +69,10 @@ export class ProductsService {
         price: 'product.price',
         removed: 'product.removed',
         description: 'product.description',
-        //type_description: 'producttype.description',
-        //t_id: 'producttype.id',
+        // type_description: 'producttype.description',
+        // t_id: 'producttype.id',
       })
-      //.join('producttype', 'product.type_id', 'producttype.id')
+      // .join('producttype', 'product.type_id', 'producttype.id')
       .where('product.description', 'like', `%${sp}%`)
       .orWhere('product.reference', 'like', `%${sp}%`);
     // return await this.knex('product').where('description', 'like', `%${sp}%`);

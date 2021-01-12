@@ -11,7 +11,6 @@ export class ProducttypeController {
     @Param('itemsPerPage') itemsPerPage: number,
     @Param('pageNumber') pageNumber: number,
   ): Promise<any> {
-    console.log(pageNumber);
     return await this.producttypeService.pages(itemsPerPage, pageNumber);
   }
   @Get()
