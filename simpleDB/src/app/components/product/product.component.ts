@@ -22,7 +22,8 @@ export class ProductComponent implements OnInit {
   currentIndex = -1;
   searchquery;
   searchresults: any = [];
-
+  totalPrice: any;
+  totalWeight: any;
 
   p: number = 1;
 
@@ -46,6 +47,7 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
+    //console.log(this.productService.getTotal().subscribe(r => console.log(r)));
     this.readProduct();
   }
 
@@ -65,12 +67,13 @@ export class ProductComponent implements OnInit {
 
     this.productService.getAll(this.access_token)
       .subscribe(
-        product =>
+        results =>
         {
-          for(let p of product){
-            this.typeService.get(p.type_id).subscribe(result => { p.type_id=result[0].description})
-          }
-          this.product = product
+          this.product = results.products;
+          this.totalPrice = results.price[0].totalprice;
+          this.totalWeight = results.weight[0].totalweight;
+          console.log(results.weight[0].totalweight)
+          console.log(results.price[0].totalprice)
         },
         error => {
 

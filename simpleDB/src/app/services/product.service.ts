@@ -16,6 +16,10 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getTotal(): Observable<any> {
+    return this.httpClient.get(baseURL);
+  }
+
   getAll(token: any): Observable<any> {
     httpOptions.headers =
       httpOptions.headers.set('Authorization', token);
