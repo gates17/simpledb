@@ -6,6 +6,14 @@ import { ProducttypeService } from './producttype.service';
 export class ProducttypeController {
   constructor(private readonly producttypeService: ProducttypeService) {}
 
+  @Get('page/:itemsPerPage/:pageNumber')
+  async page(
+    @Param('itemsPerPage') itemsPerPage: number,
+    @Param('pageNumber') pageNumber: number,
+  ): Promise<any> {
+    console.log(pageNumber);
+    return await this.producttypeService.pages(itemsPerPage, pageNumber);
+  }
   @Get()
   async findAll(): Promise<any> {
     return await this.producttypeService.findAll();

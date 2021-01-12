@@ -6,6 +6,13 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
+  /*
+  @Get()
+  async findTotal(): Promise<any> {
+    return await this.productService.totalProducts();
+  }
+  */
+
   @Get()
   async findAll(): Promise<any> {
     return await this.productService.findAll();

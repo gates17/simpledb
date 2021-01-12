@@ -5,6 +5,15 @@ import { KNEX_CONNECTION } from '@nestjsplus/knex';
 export class ProducttypeService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
+  async pages(itemsPerPage: number, pageNumber: number): Promise<any> {
+    const x: number = +pageNumber;
+    return await this.knex
+      .table('producttype')
+      .select('*')
+      .limit(itemsPerPage)
+      .offset(x);
+  }
+
   async findAll(): Promise<any> {
     let productTypes = [];
     const trx = await this.knex.transaction();

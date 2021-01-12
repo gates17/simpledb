@@ -1,16 +1,34 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { KNEX_CONNECTION } from '@nestjsplus/knex';
+import { promises } from 'fs';
 
 @Injectable()
 export class ProductsService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
+  async totalProducts(): Promise<any> {
+    return await this.knex.table('product').count('id').where('removed', 0);
+  }
+
   async findAll(): Promise<any> {
-    return await this.knex
+    /*const total = await this.knex
+      .table('product')
+      .count('id')
+      .where('removed', 0);
+      */
+    //let Pages = total / itemsPerPage;
+    const products = await this.knex
       .table('product')
       .select('*')
       .from('product')
       .where('removed', 0);
+
+    const price = await this.knex.table('product').sum({ totalprice: 'price' });
+    const weight = await this.knex
+      .table('product')
+      .sum({ totalweight: 'weight' });
+    const results = { price, weight, products };
+    return results;
   }
 
   async create(body: any): Promise<any> {
@@ -52,12 +70,12 @@ export class ProductsService {
         price: 'product.price',
         removed: 'product.removed',
         description: 'product.description',
-        type_description: 'producttype.description',
-        t_id: 'producttype.id',
+        //type_description: 'producttype.description',
+        //t_id: 'producttype.id',
       })
-      .join('producttype', 'product.type_id', 'producttype.id')
+      //.join('producttype', 'product.type_id', 'producttype.id')
       .where('product.description', 'like', `%${sp}%`)
-      .orWhere('producttype.description', 'like', `%${sp}%`);
+      .orWhere('product.reference', 'like', `%${sp}%`);
     // return await this.knex('product').where('description', 'like', `%${sp}%`);
   }
 }
