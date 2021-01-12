@@ -2,6 +2,7 @@ import { element } from 'protractor';
 import { ProducttypeService } from './../../services/producttype.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-producttype',
@@ -15,7 +16,8 @@ export class ProducttypeComponent implements OnInit {
   currentIndex = -1;
   name = '';
 
-  p: number = 1;
+  p: number = 2;
+  itemsTotal: number = 10;
 
   options = [
     { value: '1', label: '10' },
@@ -24,7 +26,12 @@ export class ProducttypeComponent implements OnInit {
   ];
   default=1;
 
-  itemsTotal = 10;
+
+  pageForm = new FormGroup({
+    itemsPerPage:  new FormControl(null),
+    pageNumber:  new FormControl(null),
+  })
+
   constructor(
     private productTypeService: ProducttypeService,
     private router: Router,
@@ -32,6 +39,16 @@ export class ProducttypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
+    // server side pagination
+    /*
+    this.productTypeService.getPage(this.itemsTotal, this.p ).subscribe(results => {
+      this.productType=results.pageResults;
+    },
+
+    error => {
+      this.gotoLogin();
+    });
+    */
     this.readProductproductType();
   }
 
@@ -52,6 +69,7 @@ export class ProducttypeComponent implements OnInit {
         error => {
           this.gotoLogin();
         });
+
   }
 
 }

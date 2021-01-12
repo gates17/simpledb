@@ -16,6 +16,10 @@ export class ProducttypeService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getPage(itemsPerPage, pageNumber): Observable<any> {
+    return this.httpClient.get(`${baseURL}/page/${itemsPerPage}/${pageNumber}`)
+  }
+
   getAll(token: any): Observable<any> {
     console.log('service')
     httpOptions.headers =
