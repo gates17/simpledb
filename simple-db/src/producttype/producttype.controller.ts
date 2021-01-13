@@ -13,6 +13,7 @@ export class ProducttypeController {
   ): Promise<any> {
     return await this.producttypeService.pages(itemsPerPage, pageNumber);
   }
+
   @Get()
   async findAll(): Promise<any> {
     return await this.producttypeService.findAll();

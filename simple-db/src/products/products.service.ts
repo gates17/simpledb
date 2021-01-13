@@ -5,9 +5,9 @@ import { KNEX_CONNECTION } from '@nestjsplus/knex';
 export class ProductsService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
-  async totalProducts(): Promise<any> {
+  /*  async totalProducts(): Promise<any> {
     return await this.knex.table('product').count('id').where('removed', 0);
-  }
+  } */
 
   async findAll(): Promise<any> {
     /*const total = await this.knex

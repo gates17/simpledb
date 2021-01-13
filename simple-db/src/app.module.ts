@@ -20,6 +20,9 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { SalesHistoryController } from './sales-history/sales-history.controller';
 import { SalesHistoryService } from './sales-history/sales-history.service';
 import { SalesHistoryModule } from './sales-history/sales-history.module';
+import { SearchController } from './search/search.controller';
+import { SearchService } from './search/search.service';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -38,6 +41,7 @@ import { SalesHistoryModule } from './sales-history/sales-history.module';
     UsersModule,
     AuthModule,
     SalesHistoryModule,
+    SearchModule,
   ],
   controllers: [
     AppController,
@@ -46,6 +50,7 @@ import { SalesHistoryModule } from './sales-history/sales-history.module';
     ProductmaterialController,
     UsersController,
     SalesHistoryController,
+    SearchController,
   ],
   providers: [
     AppService,
@@ -54,6 +59,7 @@ import { SalesHistoryModule } from './sales-history/sales-history.module';
     ProductsService,
     UsersService,
     SalesHistoryService,
+    SearchService,
     /*{
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
