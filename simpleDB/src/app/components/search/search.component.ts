@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { SearchService } from './../../services/search.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,16 +15,21 @@ import 'jspdf-autotable';
 })
 export class SearchComponent implements OnInit {
 
+  @Output() messageEvent = new EventEmitter<any>();
+
   access_token: any;
   product: any;
-  pDel: any;
-  currentProduct = null;
-  currentIndex = -1;
-  searchresults: any = [];
+  //pDel: any;
   productSub: Subscription;
 
-  p: number = 1;
+  searchquery;
+  searchresults: any = [];
+  typeRes: any = [];
+  materialRes: any = [];
+  typequery;
+  materialquery;
 
+  p: number = 1;
   options = [
     { value: '1', label: '10' },
     { value: '2', label: '25' },
@@ -37,7 +43,7 @@ export class SearchComponent implements OnInit {
   })
 
   constructor(
-    private productService: ProductService,
+    private _searchService: SearchService,
     //private typeService: ProducttypeService,
     private router: Router,
     private route:ActivatedRoute,
@@ -45,7 +51,7 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('teste')
+  /*   console.log('teste')
     this.access_token= sessionStorage.getItem('access_token')
     //this.readProduct();
 
@@ -63,7 +69,7 @@ export class SearchComponent implements OnInit {
         });
       }
 
-    });
+    }); */
   }
 
   gotoLogin(){
@@ -74,92 +80,71 @@ export class SearchComponent implements OnInit {
     this.location.back();
   }
 
-  pageItems(event: any){
-    this.itemsTotal=event.target.value
-  }
-
-  /*
-  readProduct(): void {
-
-    this.productService.getAll(this.access_token)
-      .subscribe(
-        product =>
-        {
-          for(let p of product){
-            this.typeService.get(p.type_id).subscribe(result => { p.type_id=result[0].description})
-          }
-          this.product = product
-        },
-        error => {
-
-          this.gotoLogin();
-        });
-      }
-*/
-
-
-  softDelete(id){
-    this.productService.get(id).subscribe(result => {
-      this.pDel = result[0]
-      if(this.pDel.removed === 0)
-            this.productForm.controls.removed.setValue(1);
-          else{
-            this.productForm.controls.removed.setValue(0);
-          }
-
-    })
-    this.productService.softDelete(id, this.productForm.value).subscribe(result => {
-      this.router.navigate(['/dashboard']);
-    }, error => console.error(error));
-  }
-
   search(event: any){
-    let prod: any;
-    let searchresults: any = [];
     let searchParam = event.target.value;
     if(searchParam === "") { this.searchresults = []}
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
-      for(prod of this.product){
-        let match = false
-        for(let key in prod) {
-          let value = prod[key]
-            if (value && value.toString() && value.toString().toLowerCase().includes(searchParam.toString().toLowerCase())) {
-              match=true
-            }
+      this.searchquery = searchParam
+      this._searchService.getProduct(searchParam).subscribe(
+        results => {
+          console.log(results)
+          this.searchresults = results
+          console.log(this.searchresults)
         }
-        if(match===true) {
-          searchresults.push(prod)
-        }
-      }
-      this.searchresults=searchresults
+      )
     }
   }
 
-  convertPdf() {
-
-
-    var doc = new jspdf('l','mm','A4');
-    var col = [["Id", "loja","tipo de material","material","referencia","descrição","data de registo"," data de atualização ","data de venda", "vendedor", "criado por", "peso", "preço", "disponibilidade"]];
-    var rows = [];
-
-    this.product.forEach(element => {
-      let values = [];
-      for (let key in element ){
-        let value=element[key]
-        values.push(value)
+  fullMatchSearch(){
+    this._searchService.getProduct(this.searchquery).subscribe(
+      results => {
+        this.searchresults = results
+        console.log(this.searchresults)
       }
-      rows.push(values);
-
-    });
-    //doc.autotable(col, rows);
-
-    (doc as any).autoTable({
-      head: col,
-      body: rows,
-    })
-
-    doc.save('Test.pdf');
+    )
+    this.messageEvent.emit(this.searchresults)
   }
 
+  searchType(event: any){
+    let searchParam = event.target.value;
+    console.log("Param "+searchParam, "query "+this.typequery, "res "+this.typeRes)
+    if(searchParam === "") { this.typeRes = [], this.typequery=null}
+    if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
+    {
+      this.typequery = searchParam
+      this._searchService.getType(searchParam).subscribe(
+        results => {
+          this.typeRes = results
+        }
+      )
+    }
+  }
+
+  searchMaterial(event: any){
+    let searchParam = event.target.value;
+    console.log("Param "+searchParam, "query "+this.materialquery, "res "+this.materialRes)
+    if(searchParam === "") { this.materialRes = [], this.materialquery=null}
+    if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
+    {
+      this.materialquery = searchParam
+      this._searchService.getMaterial(searchParam).subscribe(
+        results => {
+          this.materialRes = results
+        }
+      )
+    }
+  }
+
+  catSearch(){
+
+    this._searchService.getCat(this.typequery, this.materialquery).subscribe(
+      results => {
+        this.searchresults = results
+        console.log(this.searchresults)
+      }
+    )
+    this.messageEvent.emit(this.searchresults)
+    //this.messageEvent.emit(this.searchresults)
+  }
 }

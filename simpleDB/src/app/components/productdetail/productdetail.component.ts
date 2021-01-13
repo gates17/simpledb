@@ -1,10 +1,11 @@
+import { ProductmaterialService } from './../../services/productmaterial.service';
 import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { formatDate, Location } from '@angular/common';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -15,23 +16,15 @@ import { formatDate, Location } from '@angular/common';
 export class ProductdetailComponent implements OnInit {
   private request:any;
 
-  typeReq:any;
   product: any;
   productSub: Subscription;
 
 
   productForm = new FormGroup({
-    store_id:  new FormControl(null),
     type_id:  new FormControl(null),
     material_id:  new FormControl(null),
     reference:  new FormControl(null),
     description:  new FormControl(null),
-    state:  new FormControl(null),
-    entryDate:  new FormControl(null),
-    lastUpdate:  new FormControl(null),
-    soldDate:  new FormControl(null),
-    seller:  new FormControl(null),
-    insertedBy:  new FormControl(null),
     weight:  new FormControl(null),
     price:  new FormControl(null),
   })
@@ -39,8 +32,9 @@ export class ProductdetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
-    private productTypeService:ProducttypeService,
+    private _productService: ProductService,
+    private _productTypeService: ProducttypeService,
+    private _materialService: ProductmaterialService,
     private location: Location,
 
     ) { }
@@ -52,40 +46,21 @@ export class ProductdetailComponent implements OnInit {
 
       if (id) {
 
-        this.request = this.productService.get(id).subscribe((prod: any) => {
+        this.request = this._productService.get(id).subscribe((prod: any) => {
           if (prod) {
             this.product = prod[0];
-            console.log(this.product)
 
-            this.productTypeService.get(this.product.type_id).subscribe((pt: any) => {
-              this.typeReq = pt[0]
-              this.productForm.controls.type_id.setValue(this.typeReq.description);
+            this._productTypeService.get(this.product.type_id).subscribe((pt: any) => {
+              this.productForm.controls.type_id.setValue(pt[0].description);
             });
 
-            let entrydate:any = null;
-            let lastUpdate:any = null;
-            let soldDate:any = null;
-            if(this.product.entryDate !== null){
-              entrydate = formatDate(this.product.entryDate, 'yyyy-MM-dd', 'en-US')
-            }
-            if(this.product.lastUpdate !== null){
-              lastUpdate = formatDate(this.product.lastUpdate, 'yyyy-MM-dd', 'en-US')
-            } if(this.product.soldDate !== null){
-              soldDate = formatDate(this.product.soldDate, 'yyyy-MM-dd', 'en-US')
-            }
-
-            this.productForm.controls.store_id.setValue(this.product.store_id);
-            //this.productForm.controls.type_id.setValue(this.product.type_id);
-            this.productForm.controls.material_id.setValue(this.product.material_id);
+            this._materialService.get(this.product.material_id).subscribe((mat: any) => {
+              console.log(mat[0].description)
+              this.productForm.controls.material_id.setValue(mat[0].description);
+            });
 
             this.productForm.controls.reference.setValue(this.product.reference);
             this.productForm.controls.description.setValue(this.product.description);
-            this.productForm.controls.state.setValue(this.product.state);
-            this.productForm.controls.entryDate.setValue(entrydate);
-            this.productForm.controls.lastUpdate.setValue(lastUpdate);
-            this.productForm.controls.soldDate.setValue(soldDate);
-            this.productForm.controls.seller.setValue(this.product.seller);
-            this.productForm.controls.insertedBy.setValue(this.product.insertedBy);
             this.productForm.controls.weight.setValue(this.product.weight);
             this.productForm.controls.price.setValue(this.product.price);
           }

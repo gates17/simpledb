@@ -1,6 +1,7 @@
+import { SearchComponent } from './../search/search.component';
 import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -15,18 +16,27 @@ import 'jspdf-autotable';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+
+  @ViewChild(SearchComponent) _search;
   access_token: any;
   product: any;
-  pDel: any;
-  currentProduct = null;
-  currentIndex = -1;
+  productB: any;
+
+  pDel: any; //soft delete
+
   searchquery;
   searchresults: any = [];
+
   totalPrice: any;
   totalWeight: any;
 
-  p: number = 1;
+/*
+  currentProduct = null;
+  currentIndex = -1;
+ */
 
+  //pagination options
+  p: number = 1;
   options = [
     { value: '1', label: '10' },
     { value: '2', label: '25' },
@@ -51,6 +61,15 @@ export class ProductComponent implements OnInit {
     this.readProduct();
   }
 
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    console.log(this._search)
+    this.product = this._search.searchresults
+    console.log('AFTER INIT')
+    console.log(this.product)
+  }
+
   gotoLogin(){
     this.router.navigate(['/login']);
   }
@@ -59,17 +78,28 @@ export class ProductComponent implements OnInit {
     this.location.back();
   }
 
+  receiveProducts($event) {
+    if($event.length >0){
+      this.product = $event
+    }
+    else{
+      this.product = this.productB
+      console.log('crl')
+    }
+  }
+
+
   pageItems(event: any){
     this.itemsTotal=event.target.value
   }
 
   readProduct(): void {
-
     this.productService.getAll(this.access_token)
       .subscribe(
         results =>
         {
           this.product = results.products;
+          this.productB = results.products;
           this.totalPrice = results.price[0].totalprice;
           this.totalWeight = results.weight[0].totalweight;
           console.log(results.weight[0].totalweight)
@@ -79,27 +109,7 @@ export class ProductComponent implements OnInit {
 
           this.gotoLogin();
         });
-/*
-    this.productService.getAll(this.access_token).pipe(map(r=> {
-      for(let p of r){
-        p.type_id = this.typeService.get(p.type_id).subscribe(result => {})
-      }
-      console.log(r)
-      this.product = r
-    }))
-    .subscribe(
-      product =>
-      {
-        this.product = product
-        console.log(this.product)
-      },
-      error => {
-
-        this.gotoLogin();
-      });
-*/
   }
-
 
   softDelete(id){
     this.productService.get(id).subscribe(result => {
@@ -116,7 +126,7 @@ export class ProductComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  search(event: any){
+  /* search(event: any){
     let prod: any;
     let searchresults: any = [];
     let searchParam = event.target.value;
@@ -144,7 +154,7 @@ export class ProductComponent implements OnInit {
     console.log('SEARCH')
     console.log(this.searchresults)
     this.router.navigate(['/search/'+ this.searchquery])
-  }
+  } */
 
   convertPdf() {
 

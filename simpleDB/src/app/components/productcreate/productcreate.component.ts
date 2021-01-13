@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: 'app-productcreate',
   templateUrl: './productcreate.component.html',
@@ -18,18 +19,18 @@ export class ProductcreateComponent implements OnInit {
 
   //productSub: Subscription;
   productForm = new FormGroup({
-    store_id:  new FormControl(null),
     type_id:  new FormControl(null),
     material_id:  new FormControl(null),
     reference:  new FormControl(null),
     description:  new FormControl(null),
-    state:  new FormControl(null),
     entryDate:  new FormControl(null),
+/*     store_id:  new FormControl(null),
+    state:  new FormControl(null),
     lastUpdate:  new FormControl(null),
     soldDate:  new FormControl(null),
     seller:  new FormControl(null),
     insertedBy:  new FormControl(null),
-    weight:  new FormControl(null),
+ */    weight:  new FormControl(null),
     price:  new FormControl(null),
      /*
     name: new FormControl('', [Validators.required,Validators.maxLength(255)]),
@@ -85,7 +86,8 @@ export class ProductcreateComponent implements OnInit {
   }
 
   createProduct() {
-    //this.request =
+    const currentDate = new Date().toISOString().slice(0,10)
+    this.productForm.controls.entryDate.setValue(currentDate);
     this.productCreateService.create(this.productForm.value).subscribe(result => {
       this.gotoList();
     }, error => console.error(error));

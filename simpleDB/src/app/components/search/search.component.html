@@ -1,3 +1,65 @@
+<div class="wrapper">
+  <div class="row mt-3 justify-content-around">
+    <div class="col-4">
+      <!-- Dropdown -->
+      <div class="nav-item dropdown d-flex justify-content-start" dropdown>
+        <div>
+          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)">
+        </div>
+        <div>
+        <button mdbBtn color="success" block="true"  type="submit" (click)="fullMatchSearch()" title="Guardar">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        </div>
+        <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu" >
+          <div *ngIf="searchresults.length > 0" class="dropdown">
+            <div *ngFor="let result of searchresults">
+              <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-8">
+      <!-- Dropdown -->
+      <div class="nav-item dropdown d-flex justify-content-start" dropdown>
+        <div>
+          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Tipo de Produto" (keyup)="searchType($event)">
+        </div>
+        <div>
+        <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu" >
+          <div *ngIf="typeRes.length > 0" class="dropdown">
+            <div *ngFor="let type of typeRes">
+              <li class="dropdown-item" >{{type.description}}</li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item dropdown d-flex justify-content-start" dropdown>
+        <div>
+          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Material do Produto" (keyup)="searchMaterial($event)">
+        </div>
+        <div>
+        <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu" >
+          <div *ngIf="materialRes.length > 0" class="dropdown">
+            <div *ngFor="let material of materialRes">
+              <li class="dropdown-item" >{{material.description}}</li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mdbBtn color="success" block="true"  type="submit" (click)="catSearch()" title="Guardar">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+
+
+  </div>
+</div>
+
+<!--
 <div class="container">
   <div class="row py-5">
 
@@ -44,3 +106,4 @@
     </div>
   </div>
 </div>
+-->
