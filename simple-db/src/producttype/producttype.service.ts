@@ -8,28 +8,14 @@ export class ProducttypeService {
 
   async pages(itemsPerPage: number, pageNumber: number): Promise<any> {
     const x: number = +pageNumber;
-    const total: number = await this.knex('producttype').count('*', {
+    const totalPages: number = await this.knex('producttype').count('*', {
       as: 'total',
     });
-    let totalPages: number = total[0].total / itemsPerPage;
-    totalPages = Math.ceil(totalPages);
     const offset = (x - 1) * itemsPerPage;
     const pageResults = await this.knex('producttype')
       .offset(offset)
       .limit(itemsPerPage);
-    let nextPage = 1;
-    if (x + 1 < totalPages) {
-      nextPage = x + 1;
-    } else {
-      nextPage = x;
-    }
-    let previousPage = 1;
-    if (x > 1) {
-      previousPage = x - 1;
-    } else {
-      previousPage = x;
-    }
-    const pagination = { totalPages, previousPage, nextPage, pageResults };
+    const pagination = { totalPages, pageResults };
     return pagination;
   }
 

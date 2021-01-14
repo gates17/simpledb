@@ -5,20 +5,78 @@ import { KNEX_CONNECTION } from '@nestjsplus/knex';
 export class ProductsService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
-  /*  async totalProducts(): Promise<any> {
-    return await this.knex.table('product').count('id').where('removed', 0);
-  } */
+  async pages(itemsPerPage: number, pageNumber: number): Promise<any> {
+    const x: number = +pageNumber;
+    const totalPages: number = await this.knex('product')
+      .count('*', {
+        as: 'total',
+      })
+      .where('removed', 0);
+    const offset = (x - 1) * itemsPerPage;
+    const pageResults = await this.knex('product')
+      .select({
+        id: 'product.id',
+        type_id: 'product.type_id',
+        material_id: 'product.material_id',
+        reference: 'product.reference',
+        description: 'product.description',
+        weight: 'product.weight',
+        price: 'product.price',
+      })
+      .offset(offset)
+      .limit(itemsPerPage)
+      .where('removed', 0);
+
+    const price = await this.knex
+      .table('product')
+      .sum({ totalprice: 'price' })
+      .where('removed', 0);
+    const weight = await this.knex
+      .table('product')
+      .sum({ totalweight: 'weight' })
+      .where('removed', 0);
+    // const results = { price, weight, pageResults };
+    const pagination = { totalPages, price, weight, pageResults };
+    return pagination;
+  }
+
+  async removed(itemsPerPage: number, pageNumber: number): Promise<any> {
+    const x: number = +pageNumber;
+    const totalPages: number = await this.knex('product')
+      .count('*', {
+        as: 'total',
+      })
+      .where('removed', 1);
+    const offset = (x - 1) * itemsPerPage;
+    const pageResults = await this.knex('product')
+      .offset(offset)
+      .limit(itemsPerPage)
+      .where('removed', 1);
+
+    const price = await this.knex
+      .table('product')
+      .sum({ totalprice: 'price' })
+      .where('removed', 1);
+    const weight = await this.knex
+      .table('product')
+      .sum({ totalweight: 'weight' })
+      .where('removed', 1);
+    // const results = { price, weight, pageResults };
+    const pagination = { totalPages, price, weight, pageResults };
+    return pagination;
+  }
 
   async findAll(): Promise<any> {
-    /*const total = await this.knex
-      .table('product')
-      .count('id')
-      .where('removed', 0);
-      */
-    // let Pages = total / itemsPerPage;
     const products = await this.knex
       .table('product')
-      .select('*')
+      .select({
+        type_id: 'product.type_id',
+        material_id: 'product.material_id',
+        reference: 'product.reference',
+        description: 'product.description',
+        weight: 'product.weight',
+        price: 'product.price',
+      })
       .from('product')
       .where('removed', 0);
 
@@ -47,11 +105,17 @@ export class ProductsService {
     return await this.knex('product').where('id', id).del();
   }
 
-  async softDelete(id: number, rm: boolean): Promise<any> {
+  /* async toDelete(body: any): Promise<any> {
+    console.log(body);
+    //return await this.knex('product').where('id', id).del();
+    return;
+  } */
+
+  async softDelete(id: number, rm: number): Promise<any> {
     return await this.knex('product').where('id', id).update('removed', rm);
   }
 
-  async search(sp: any): Promise<any> {
+  /* async search(sp: any): Promise<any> {
     return await this.knex('product')
       .select({
         id: 'product.id',
@@ -69,12 +133,8 @@ export class ProductsService {
         price: 'product.price',
         removed: 'product.removed',
         description: 'product.description',
-        // type_description: 'producttype.description',
-        // t_id: 'producttype.id',
       })
-      // .join('producttype', 'product.type_id', 'producttype.id')
       .where('product.description', 'like', `%${sp}%`)
       .orWhere('product.reference', 'like', `%${sp}%`);
-    // return await this.knex('product').where('description', 'like', `%${sp}%`);
-  }
+  } */
 }

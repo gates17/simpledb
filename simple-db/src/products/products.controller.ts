@@ -6,13 +6,6 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
-  /*
-  @Get()
-  async findTotal(): Promise<any> {
-    return await this.productService.totalProducts();
-  }
-  */
-
   @Get()
   async findAll(): Promise<any> {
     return await this.productService.findAll();
@@ -38,13 +31,29 @@ export class ProductsController {
     return this.productService.delete(id);
   }
 
+  /* @Delete()
+  async removeAll(@Body() body): Promise<any> {
+    return this.productService.toDelete(body);
+  } */
+
   @Put(':id')
   async softRemove(@Param('id') id: number, @Body() rm): Promise<any> {
     return this.productService.softDelete(id, rm);
   }
 
-  @Get('search/:sp')
-  async search(@Param('sp') sp: any): Promise<any> {
-    return this.productService.search(sp);
+  @Get('page/:itemsPerPage/:pageNumber')
+  async page(
+    @Param('itemsPerPage') itemsPerPage: number,
+    @Param('pageNumber') pageNumber: number,
+  ): Promise<any> {
+    return await this.productService.pages(itemsPerPage, pageNumber);
+  }
+
+  @Get('removed/:itemsPerPage/:pageNumber')
+  async removed(
+    @Param('itemsPerPage') itemsPerPage: number,
+    @Param('pageNumber') pageNumber: number,
+  ): Promise<any> {
+    return await this.productService.removed(itemsPerPage, pageNumber);
   }
 }

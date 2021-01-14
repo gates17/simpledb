@@ -6,7 +6,6 @@ export class SearchService {
   constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
 
   async getCat(type, material): Promise<any> {
-    console.log(type, material);
     if (type && !material && material !== undefined) {
       return await this.knex('producttype')
         .where('producttype.description', 'like', `%${type}%`)
