@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit {
   access_token: any;
   product: any;
   productB: any;
-  toPrint: any;
+  toPrint = [];
 
   pDel: any; //soft delete
 
@@ -59,9 +59,11 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
-    //console.log(this.productService.getTotal().subscribe(r => console.log(r)));
-    //this.readProduct();
     this.getPage();
+    this.productService.getAll(this.access_token).subscribe(results => {
+      this.toPrint = results.products
+    })
+
   }
 
   gotoLogin(){
@@ -78,7 +80,6 @@ export class ProductComponent implements OnInit {
     }
     else{
       this.product = this.productB
-      console.log('crl')
     }
   }
 
@@ -94,9 +95,7 @@ export class ProductComponent implements OnInit {
       this.totalPrice = results.price[0].totalprice;
       this.totalWeight = results.weight[0].totalweight;
       this.pagesTotal = results.totalPages[0].total;
-      console.log(this.pagesTotal)
-      /*  this.product=results.pageResults;
-       this.pagesTotal=results.totalPages[0].total;*/
+      console.log(this.product)
     },
 
     error => {
@@ -130,12 +129,12 @@ export class ProductComponent implements OnInit {
 
   convertPdf() {
 
+    console.log(this.toPrint)
     var doc = new jspdf('l','mm','A4');
-    var col = [["tipo de material","material","referencia","descrição", "peso", "preço"]];
+    var col = [["Tipo de Produto","Material","Referencia","Descrição", "Peso", "Preço"]];
     var rows = [];
 
-    this.product.forEach(element => {
-      console.log(element)
+    this.toPrint.forEach(element => {
       let values = [];
       for (let key in element ){
         if(key !== 'id') {
@@ -146,7 +145,6 @@ export class ProductComponent implements OnInit {
       rows.push(values);
 
     });
-    //doc.autotable(col, rows);
 
     (doc as any).autoTable({
       head: col,

@@ -41,15 +41,9 @@
           <select class="browser-default custom-select" style="width: 60px;" (change)="pageItemsChange($event)">
             <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
           </select>
-          <!-- server side pagination
-          <button mdbBtn>Previous</button>
-          <button mdbBtn>Next</button>
-          -->
-          <!-- client side pagination-->
           <pagination-controls id="pt" (pageChange)="pageChange($event)"></pagination-controls>
-          <!-- <pagination-controls id="pt" (pageChange)="p = $event"></pagination-controls> -->
 
-          <button mdbBtn color="primary" [routerLink]="['/producttype/create']">Criar novo</button>
+          <button mdbBtn color="primary" [routerLink]="['/producttype/create']">Criar Tipo de Produto</button>
 
         </div>
 

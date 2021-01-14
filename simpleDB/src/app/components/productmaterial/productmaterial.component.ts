@@ -10,8 +10,6 @@ import { ProductmaterialService } from 'src/app/services/productmaterial.service
 export class ProductmaterialComponent implements OnInit {
   access_token: any;
   materials: any;
-  currentProduct = null;
-  currentIndex = -1;
   name = '';
 
   p: number = 1;
@@ -57,40 +55,4 @@ export class ProductmaterialComponent implements OnInit {
           this.gotoLogin();
         });
   }
-  /*
-  refresh(): void {
-    this.readProductMaterials();
-    this.currentProduct = null;
-    this.currentIndex = -1;
-  }
-
-  setCurrentProduct(product, index): void {
-    this.currentProduct = product;
-    this.currentIndex = index;
-  }
-
-  deleteAllProducts(): void {
-    this.productmaterialService.deleteAll()
-      .subscribe(
-        response => {
-          console.log(response);
-          this.readProductMaterials();
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  searchByName(): void {
-    this.productmaterialService.searchByName(this.name)
-      .subscribe(
-        products => {
-          this.materials = products;
-          console.log(products);
-        },
-        error => {
-          console.log(error);
-        });
-  }
-  */
 }

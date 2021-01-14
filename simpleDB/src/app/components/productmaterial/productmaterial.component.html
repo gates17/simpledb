@@ -15,11 +15,6 @@
               <a  [routerLink]="['/productmaterial/detail/', item.id ]">
                 <div class="d-flex align-items-center">
                   <div class="avatar avatar-blue mr-3">{{item.id}}</div>
-<!--
-                  <div class="">
-                    <p class="font-weight-bold mb-0">{{m.id}}</p>
-                  </div>
--->
                 </div>
               </a>
             </td>
@@ -29,18 +24,6 @@
                 <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/productmaterial/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
                 <button mdbBtn color="danger" class="btn btn-sm btn-icon" [routerLink]="['/productmaterial/detail', item.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
               </div>
-<!--
-              <div class="dropdown">
-                <button class="btn btn-sm btn-icon" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="bx bx-dots-horizontal-rounded" data-toggle="tooltip" data-placement="top"
-                        title="Actions"></i>
-                    </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                  <a class="dropdown-item" href="#"><i class="bx bxs-pencil mr-2"></i> Editar</a>
-                  <a class="dropdown-item text-danger" href="#"><i class="bx bxs-trash mr-2"></i> Apagar</a>
-                </div>
-              </div>
-    -->
             </td>
           </tr>
 
@@ -52,7 +35,7 @@
             <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
           </select>
           <pagination-controls id="pm" (pageChange)="p = $event"></pagination-controls>
-          <button mdbBtn color="primary" [routerLink]="['/productmaterial/create']">Criar novo</button>
+          <button mdbBtn color="primary" [routerLink]="['/productmaterial/create']">Criar Material</button>
 
         </div>
     </div>
