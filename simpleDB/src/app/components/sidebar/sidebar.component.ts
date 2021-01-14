@@ -18,10 +18,10 @@ export class SidebarComponent implements OnInit {
     this.show = !this.show;
     console.log(this.show)
     if(this.show){
-      document.getElementById("mySidenav").style.width = "250px"
+      document.getElementById("mySidenav").style.width = "100%"
     }
     else {
-      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("mySidenav").style.width = "0%";
     }
   }
 

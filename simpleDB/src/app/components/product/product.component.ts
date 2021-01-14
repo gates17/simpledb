@@ -1,7 +1,8 @@
+import { element } from 'protractor';
 import { SearchComponent } from './../search/search.component';
 import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -17,10 +18,10 @@ import 'jspdf-autotable';
 })
 export class ProductComponent implements OnInit {
 
-  @ViewChild(SearchComponent) _search;
   access_token: any;
   product: any;
   productB: any;
+  toPrint: any;
 
   pDel: any; //soft delete
 
@@ -44,6 +45,7 @@ export class ProductComponent implements OnInit {
   ];
   default=1;
   itemsTotal = 10;
+  pagesTotal: number = 1;
 
   productForm = new FormGroup({
     removed:  new FormControl(null),
@@ -58,16 +60,8 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
     //console.log(this.productService.getTotal().subscribe(r => console.log(r)));
-    this.readProduct();
-  }
-
-  ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    console.log(this._search)
-    this.product = this._search.searchresults
-    console.log('AFTER INIT')
-    console.log(this.product)
+    //this.readProduct();
+    this.getPage();
   }
 
   gotoLogin(){
@@ -93,6 +87,23 @@ export class ProductComponent implements OnInit {
     this.itemsTotal=event.target.value
   }
 
+  getPage() {
+    this.productService.getPage(this.itemsTotal, this.p ).subscribe(results => {
+      this.product = results.pageResults;
+      this.productB = results.products;
+      this.totalPrice = results.price[0].totalprice;
+      this.totalWeight = results.weight[0].totalweight;
+      this.pagesTotal = results.totalPages[0].total;
+      console.log(this.pagesTotal)
+      /*  this.product=results.pageResults;
+       this.pagesTotal=results.totalPages[0].total;*/
+    },
+
+    error => {
+      this.gotoLogin();
+    });
+  }
+
   readProduct(): void {
     this.productService.getAll(this.access_token)
       .subscribe(
@@ -102,8 +113,6 @@ export class ProductComponent implements OnInit {
           this.productB = results.products;
           this.totalPrice = results.price[0].totalprice;
           this.totalWeight = results.weight[0].totalweight;
-          console.log(results.weight[0].totalweight)
-          console.log(results.price[0].totalprice)
         },
         error => {
 
@@ -111,63 +120,28 @@ export class ProductComponent implements OnInit {
         });
   }
 
-  softDelete(id){
-    this.productService.get(id).subscribe(result => {
-      this.pDel = result[0]
-      if(this.pDel.removed === 0)
-            this.productForm.controls.removed.setValue(1);
-          else{
-            this.productForm.controls.removed.setValue(0);
-          }
-
-    })
-    this.productService.softDelete(id, this.productForm.value).subscribe(result => {
-      this.router.navigate(['/dashboard']);
+  softDelete(pid){
+    this.productForm.controls.removed.setValue(1)
+    this.productService.softDelete(pid, this.productForm.value).subscribe(result => {
+      this.getPage()
+      this.router.navigate(['/products']);
     }, error => console.error(error));
   }
 
-  /* search(event: any){
-    let prod: any;
-    let searchresults: any = [];
-    let searchParam = event.target.value;
-    this.searchquery = searchParam
-    if(searchParam === "") { this.searchresults = []}
-    if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
-    {
-      for(prod of this.product){
-        let match = false
-        for(let key in prod) {
-          let value = prod[key]
-            if (value && value.toString() && value.toString().toLowerCase().includes(searchParam.toString().toLowerCase())) {
-              match=true
-            }
-        }
-        if(match===true) {
-          searchresults.push(prod)
-        }
-      }
-      this.searchresults=searchresults
-    }
-  }
-  fullMatchSearch(){
-
-    console.log('SEARCH')
-    console.log(this.searchresults)
-    this.router.navigate(['/search/'+ this.searchquery])
-  } */
-
   convertPdf() {
 
-
     var doc = new jspdf('l','mm','A4');
-    var col = [["Id", "loja","tipo de material","material","referencia","descrição","data de registo"," data de atualização ","data de venda", "vendedor", "criado por", "peso", "preço", "disponibilidade"]];
+    var col = [["tipo de material","material","referencia","descrição", "peso", "preço"]];
     var rows = [];
 
     this.product.forEach(element => {
+      console.log(element)
       let values = [];
       for (let key in element ){
-        let value=element[key]
-        values.push(value)
+        if(key !== 'id') {
+          let value=element[key]
+          values.push(value)
+        }
       }
       rows.push(values);
 

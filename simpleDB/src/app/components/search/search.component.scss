@@ -22,3 +22,34 @@ li:hover{
   cursor : pointer;
   color:white;
 }
+
+@media (min-width: 1024px){
+  .btn {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .dropdown-menu{
+    margin-top:20px;
+    left:auto;
+    min-width: 12rem;
+  }
+  input {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.25rem;
+    border: 1px solid black;
+  }
+
+  .d1{
+    right: 34px !important;
+  }
+  .d2{
+    right: 8px !important;
+  }
+}
+
+@media (min-width: 1366px){
+  .btn {
+    padding: 0.75rem 1rem !important;
+  }
+
+}

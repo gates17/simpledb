@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'products/detail/:id', component: ProductdetailComponent, canActivate: [AuthGuardGuard] },
   { path: 'products/create', component: ProductcreateComponent, canActivate: [AuthGuardGuard]  },
   { path: 'products/update/:id', component: ProductupdateComponent, canActivate: [AuthGuardGuard]  },
-  { path: 'products/delete/:id', component: ProductdeleteComponent, canActivate: [AuthGuardGuard] },
+  { path: 'products/delete', component: ProductdeleteComponent, canActivate: [AuthGuardGuard] },
 
   { path: 'productmaterial', component: ProductmaterialComponent, canActivate: [AuthGuardGuard]  },
   { path: 'productmaterial/detail/:id', component: ProductmaterialdetailComponent, canActivate: [AuthGuardGuard]  },

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ProductmaterialService } from 'src/app/services/productmaterial.service';
 
 
 @Component({
@@ -12,10 +13,11 @@ import { Location } from '@angular/common';
   styleUrls: ['./productcreate.component.scss']
 })
 export class ProductcreateComponent implements OnInit {
-  private request:any;
+  private request: any;
   product: string;
-  access_token:any;
-  types:any;
+  access_token: any;
+  types: any;
+  materials :any;
 
   //productSub: Subscription;
   productForm = new FormGroup({
@@ -62,8 +64,9 @@ export class ProductcreateComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productCreateService: ProductService,
-    private productTypeService: ProducttypeService,
+    private _productService: ProductService,
+    private _productTypeService: ProducttypeService,
+    private _materialService: ProductmaterialService,
     private location: Location,
 
   ) { }
@@ -71,9 +74,12 @@ export class ProductcreateComponent implements OnInit {
   ngOnInit() {
 
     this.access_token= sessionStorage.getItem('access_token')
-    this.productTypeService.getAll(this.access_token).subscribe(
+    this._productTypeService.getAll(this.access_token).subscribe(
       result => {
       this.types = result;
+    });
+    this._materialService.getAll(this.access_token).subscribe((mat: any) => {
+      this.materials = mat;
     });
   }
 
@@ -86,9 +92,10 @@ export class ProductcreateComponent implements OnInit {
   }
 
   createProduct() {
+    console.log('TESTE')
     const currentDate = new Date().toISOString().slice(0,10)
     this.productForm.controls.entryDate.setValue(currentDate);
-    this.productCreateService.create(this.productForm.value).subscribe(result => {
+    this._productService.create(this.productForm.value).subscribe(result => {
       this.gotoList();
     }, error => console.error(error));
   }

@@ -1,11 +1,6 @@
 <div class="container products-container">
   <form [formGroup]="productForm" (ngSubmit)="createProduct()" id="pform">
 
-
-
-      <!-- tipo <input type="number" formControlName="type_id" placeholder="Tipo de Produto" class="form-control" > -->
-
-
     <label>Escolha o tipo de Produto</label>
     <div class="md-form mt-0">
 
@@ -16,8 +11,13 @@
     </div>
 
     <!-- material -->
+    <label>Escolha o Material de Produto</label>
     <div class="md-form mt-0">
-      <input type="number" formControlName="material_id" placeholder="Material" class="form-control" >
+
+      <select class="browser-default custom-select form-control" formControlName="material_id" placeholder="Material" style="width: 200px;" >
+        <!--<option  [selected]="true" [disabled]="true" >Tipo de Produto</option>-->
+        <option *ngFor="let m of this.materials" [ngValue]="m.id">{{ m.description }}</option>
+      </select>
     </div>
 
     <!-- referencia -->
@@ -30,54 +30,6 @@
       <input type="text" formControlName="description" placeholder="Descrição"class="form-control" >
     </div>
 
-   <!-- loja
-     <div class="md-form mt-0">
-      <input type="number" formControlName="store_id" placeholder="Loja" class="form-control"  >
-
-    </div>
-     -->
-    <!-- estado
-    <div class="md-form mt-0">
-      <input type="text" formControlName="state" placeholder="Estado" class="form-control" >
-      lugar das validaçoes comentadas em baixo
-    </div>
-    -->
-    <!--
-      <div  *ngFor="let validation of validation_messages.name">
-        <span class="help-block form-error text-danger"
-          *ngIf="productForm.controls['name'].touched
-          && productForm.controls['name'].errors?.maxlength ">{{validation.message}}
-        </span>
-      </div>
-    -->
-
-    <!-- data de criação
-    <div class="md-form mt-0">
-      <input type="date" formControlName="entryDate"  placeholder="Data de entrada" class="form-control" >
-
-    </div>
-    -->
-    <!-- data de atualização
-    <div class="md-form mt-0">
-      <input type="date" formControlName="lastUpdate" placeholder="Data de atualização" class="form-control" >
-
-    </div>
-     -->
-    <!-- data de venda
-    <div class="md-form mt-0">
-      <input type="date" formControlName="soldDate" placeholder="Descrição" class="form-control" >
-    </div>
-    -->
-    <!-- vendedor
-    <div class="md-form mt-0">
-      <input type="text" formControlName="seller" placeholder="Vendedor" class="form-control" >
-    </div>
-    -->
-    <!-- inserido por
-    <div class="md-form mt-0">
-      <input type="text" formControlName="insertedBy"  placeholder="Inserido por" class=" form-control" >
-    </div>
-    -->
     <!-- peso -->
     <div class="md-form mt-0">
       <input type="number" formControlName="weight" placeholder="Peso" class="form-control" >
@@ -97,11 +49,12 @@
         </button>
       </div>
       <div class="flex-item">
-        <button mdbBtn color="danger"  block="true" class="my-4" (click)="goBack()" type="submit" title="Cancelar">Cancelar
+        <button mdbBtn color="danger"  block="true" class="my-4" (click)="goBack()" type="button" title="Cancelar">Cancelar
           <i class="fa fa-remove" aria-hidden="true"></i>
         </button>
       </div>
     </div>
+
 
   </form>
 

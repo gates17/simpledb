@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { formatDate, Location } from '@angular/common';
+import { ProductmaterialService } from 'src/app/services/productmaterial.service';
 
 
 @Component({
@@ -16,8 +17,9 @@ export class ProductupdateComponent implements OnInit {
   private request:any;
   product: any;
   productSub: Subscription;
-  access_token:any;
-  types:any;
+  access_token: any;
+  types: any;
+  materials: any;
 
   productForm = new FormGroup({
     type_id:  new FormControl(null),
@@ -40,8 +42,9 @@ export class ProductupdateComponent implements OnInit {
     //private datePipe: DatePipe,
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
-    private productTypeService: ProducttypeService,
+    private _productService: ProductService,
+    private _productTypeService: ProducttypeService,
+    private _materialService: ProductmaterialService,
     private location: Location
   ) { }
 
@@ -49,14 +52,18 @@ export class ProductupdateComponent implements OnInit {
     this.productSub = this.route.params.subscribe(params => {
       const id = params['id'];
 
-      this.productTypeService.getAll(this.access_token).subscribe(
+      this._productTypeService.getAll(this.access_token).subscribe(
         result => {
         this.types = result;
-        console.log(result)
       });
 
+      this._materialService.getAll(this.access_token).subscribe((mat: any) => {
+        this.materials = mat;
+      });
+
+
       if (id) {
-        this.request = this.productService.get(id).subscribe((prod: any) => {
+        this.request = this._productService.get(id).subscribe((prod: any) => {
           if (prod) {
             this.product = prod[0];
 
@@ -94,7 +101,7 @@ export class ProductupdateComponent implements OnInit {
 
     this.productForm.controls.lastUpdate.setValue(currentDate);
 
-    this.productService.update(this.product.id, this.productForm.value).subscribe(result => {
+    this._productService.update(this.product.id, this.productForm.value).subscribe(result => {
       console.log('teste')
       this.gotoList();
     }, error => console.error(error));

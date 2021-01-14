@@ -11,8 +11,12 @@
 
     <!-- material -->
     <div class="md-form mt-0">
-      <input type="number" formControlName="material_id" placeholder="Material" class="form-control" >
+      <select class="browser-default custom-select form-control" formControlName="material_id" placeholder="Material"  style="width: 200px;" >
+        <option>Tipo de Material</option>
+        <option *ngFor="let m of this.materials" [ngValue]="m.id">{{ m.description }}</option>
+      </select>
     </div>
+
 
     <!-- referencia -->
     <div class="md-form mt-0">

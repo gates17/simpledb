@@ -47,15 +47,19 @@ export class ProductService {
     return this.httpClient.put(`${baseURL}/${id}`, data);
   }
 
-  deleteAll(): Observable<any> {
-    return this.httpClient.delete(baseURL);
-  }
+  /* deleteAll(data): Observable<any> {
+    return this.httpClient.delete(baseURL,data);
+  } */
 
   searchByName(name): Observable<any> {
     return this.httpClient.get(`${baseURL}?name=${name}`);
   }
 
-  search(query): Observable<any> {
-    return this.httpClient.get(`${baseURL}/search/${query}`);
+  getPage(itemsPerPage, pageNumber): Observable<any> {
+    return this.httpClient.get(`${baseURL}/page/${itemsPerPage}/${pageNumber}`)
+  }
+
+  getRemovedPage(itemsPerPage, pageNumber): Observable<any> {
+    return this.httpClient.get(`${baseURL}/removed/${itemsPerPage}/${pageNumber}`)
   }
 }

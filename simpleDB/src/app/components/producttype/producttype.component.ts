@@ -12,11 +12,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ProducttypeComponent implements OnInit {
   access_token: any;
   productType: any;
-  currentProduct = null;
-  currentIndex = -1;
-  name = '';
 
-  p: number = 2;
+  p: number = 1;
   itemsTotal: number = 10;
 
   options = [
@@ -25,12 +22,7 @@ export class ProducttypeComponent implements OnInit {
     { value: '3', label: '50' },
   ];
   default=1;
-
-
-  pageForm = new FormGroup({
-    itemsPerPage:  new FormControl(null),
-    pageNumber:  new FormControl(null),
-  })
+  pagesTotal: number = 1;
 
   constructor(
     private productTypeService: ProducttypeService,
@@ -40,36 +32,33 @@ export class ProducttypeComponent implements OnInit {
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
     // server side pagination
-    /*
-    this.productTypeService.getPage(this.itemsTotal, this.p ).subscribe(results => {
-      this.productType=results.pageResults;
-    },
-
-    error => {
-      this.gotoLogin();
-    });
-    */
-    this.readProductproductType();
+    this.getPage();
+    //this.readProductproductType();
   }
 
   gotoLogin(){
     this.router.navigate(['/login']);
   }
 
-  pageItems(event: any){
-    this.itemsTotal=event.target.value
+  pageItemsChange($event){
+    this.itemsTotal=$event.target.value;
+    this.getPage();
   }
 
-  readProductproductType(): void {
-    this.productTypeService.getAll(this.access_token)
-      .subscribe(
-        productType => {
-          this.productType = productType;
-        },
-        error => {
-          this.gotoLogin();
-        });
+  pageChange($event) {
+    this.p=$event;
+    this.getPage();
+  }
 
+  getPage() {
+    this.productTypeService.getPage(this.itemsTotal, this.p ).subscribe(results => {
+      this.productType=results.pageResults;
+      this.pagesTotal=results.totalPages[0].total;
+    },
+
+    error => {
+      this.gotoLogin();
+    });
   }
 
 }

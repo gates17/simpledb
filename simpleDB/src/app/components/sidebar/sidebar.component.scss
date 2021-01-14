@@ -5,7 +5,7 @@ h1 {
   width: 90%;
 }
 
-.tabordion {
+/* .tabordion {
   color: #fff;
   display: block;
   font-family: arial, sans-serif;
@@ -68,7 +68,7 @@ h1 {
 
 .tabordion input[name="sections"]:checked ~ article {
   display: block;
-}
+} */
 
 
 @media (max-width: 533px) {
@@ -116,6 +116,75 @@ h1 {
   }
 }
 
+@media (min-width: 1024px) {
+  div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+    margin-top: 1rem;
+  }
+
+  h1 {
+    width: 95%;
+  }
+
+  .products-container{
+    margin: 5% auto 2% auto;
+    border: 1px rgb(126, 124, 124) solid;
+  }
+  .my-4{
+    width: 150px;
+    margin: .375rem !important;
+  }
+
+  #pform{
+    margin: 60px;
+  }
+
+  .actions{
+    margin-bottom: 3%;
+  }
+
+
+  .sidenav {
+    margin-top: 61px;
+    height: 100%; /* 100% Full-height */
+    max-width: 150px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #00bcd4; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+  }
+
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: white;
+    background-color: #046c96;
+  }
+
+  /* Position and style the close button (top right corner) */
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+}
 
 @media (min-width: 1366px) {
   h1 {
@@ -124,6 +193,45 @@ h1 {
 
   .tabordion {
     width: 95%;
+  }
+
+  .sidenav {
+    margin-top: 61px;
+    height: 100%; /* 100% Full-height */
+    max-width: 250px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #00bcd4; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+  }
+
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: white;
+    background-color: #046c96;
+  }
+
+  /* Position and style the close button (top right corner) */
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
   }
 }
 
@@ -149,22 +257,22 @@ div[name="tabcontainer"]{
   margin-bottom: 3%;
 }
 
-
+/*
 .sidenav {
   margin-top: 61px;
-  height: 100%; /* 100% Full-height */
-  width: 0px; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%; // 100% Full-height
+  max-width: 250px; // 0 width - change this with JavaScript
+  position: fixed; // Stay in place
+  z-index: 1; // Stay on top
+  top: 0; // Stay at the top
   left: 0;
-  background-color: #00bcd4; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #00bcd4; // Black
+  overflow-x: hidden; // Disable horizontal scroll
+  padding-top: 60px; // Place content 60px from the top
+  transition: 0.5s; // 0.5 second transition effect to slide in the sidenav
 }
 
-/* The navigation menu links */
+// The navigation menu links
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -174,20 +282,20 @@ div[name="tabcontainer"]{
   transition: 0.3s;
 }
 
-/* When you mouse over the navigation links, change their color */
+// When you mouse over the navigation links, change their color
 .sidenav a:hover {
   color: white;
   background-color: #046c96;
 }
 
-/* Position and style the close button (top right corner) */
+// Position and style the close button (top right corner)
 .sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-}
+} */
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
@@ -200,6 +308,7 @@ div[name="tabcontainer"]{
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
 
 #sidenavBtn {
   font-size:30px;
