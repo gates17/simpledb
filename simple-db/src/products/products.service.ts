@@ -7,12 +7,13 @@ export class ProductsService {
 
   async pages(itemsPerPage: number, pageNumber: number): Promise<any> {
     const x: number = +pageNumber;
+    const offset = (x - 1) * itemsPerPage;
+
     const totalPages: number = await this.knex('product')
       .count('*', {
         as: 'total',
       })
       .where('removed', 0);
-    const offset = (x - 1) * itemsPerPage;
     const pageResults = await this.knex('product')
       .select({
         id: 'product.id',
@@ -25,17 +26,18 @@ export class ProductsService {
       })
       .offset(offset)
       .limit(itemsPerPage)
+      .innerJoin('producttype', 'producttype.id', 'product.type_id')
       .where('removed', 0);
 
     const price = await this.knex
       .table('product')
       .sum({ totalprice: 'price' })
       .where('removed', 0);
+
     const weight = await this.knex
       .table('product')
       .sum({ totalweight: 'weight' })
       .where('removed', 0);
-    // const results = { price, weight, pageResults };
     const pagination = { totalPages, price, weight, pageResults };
     return pagination;
   }
@@ -70,14 +72,16 @@ export class ProductsService {
     const products = await this.knex
       .table('product')
       .select({
-        type_id: 'product.type_id',
-        material_id: 'product.material_id',
+        type_id: 'producttype.description',
+        material_id: 'productmaterial.description',
         reference: 'product.reference',
         description: 'product.description',
         weight: 'product.weight',
         price: 'product.price',
       })
       .from('product')
+      .innerJoin('producttype', 'producttype.id', 'product.type_id')
+      .innerJoin('productmaterial', 'productmaterial.id', 'product.material_id')
       .where('removed', 0);
 
     const price = await this.knex.table('product').sum({ totalprice: 'price' });
