@@ -26,7 +26,8 @@ export class ProducttypeService {
       productTypes = await trx
         .table('producttype')
         .select()
-        .from('producttype');
+        .from('producttype')
+        .orderBy('description', 'asc');
       trx.commit();
     } catch {
       trx.rollback();
@@ -48,6 +49,14 @@ export class ProducttypeService {
   }
 
   async delete(id: number): Promise<any> {
-    return await this.knex('producttype').where('id', id).del();
+    return await this.knex('producttype')
+      .whereNotExists(
+        this.knex
+          .select('*')
+          .from('product')
+          .whereRaw('product.type_id = producttype.id'),
+      )
+      .andWhere('id', id)
+      .del();
   }
 }

@@ -1,13 +1,14 @@
 import { SearchService } from './search.service';
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
 @Controller('search')
 export class SearchController {
   constructor(private readonly _searchService: SearchService) {}
 
-  @Get('cat/:type/:material')
-  async getCat(@Param('type') type, @Param('material') material): Promise<any> {
-    return await this._searchService.getCat(type, material);
+  @Get('cat')
+  async getCat(@Query() query): Promise<any> {
+    // async getCat(@Param('type') type, @Param('material') material): Promise<any> {
+    return await this._searchService.getCat(query);
   }
 
   @Get('product/:sp')

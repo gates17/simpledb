@@ -10,7 +10,7 @@ export class ProductmaterialService {
     let materials = [];
     const trx = await this.knex.transaction();
     try {
-      materials = await trx.table('productmaterial').select().from('productmaterial');
+      materials = await trx.table('productmaterial').select().from('productmaterial').orderBy('description', 'asc');
       trx.commit();
     } catch {
       trx.rollback();
@@ -32,6 +32,10 @@ export class ProductmaterialService {
   }
 
   async delete(id: number): Promise<any> {
-    return await this.knex('productmaterial').where('id', id).del();
+    return await this.knex('productmaterial')
+    .whereNotExists(this.knex.select('*').from('product').whereRaw('product.material_id = productmaterial.id'))
+    .andWhere('id',id).del();
+
+    // return await this.knex('productmaterial').innerJoin('product','product.material_id','productmaterial.id').where('id', id).del();
   }
 }
