@@ -29,7 +29,6 @@ export class ProductmaterialComponent implements OnInit {
 
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
-    console.log('nginit')
     this.readProductMaterials();
   }
 
@@ -42,8 +41,6 @@ export class ProductmaterialComponent implements OnInit {
   }
 
   readProductMaterials(): void {
-    console.log('getall')
-    console.log(this.access_token)
     this.productmaterialService.getAll(this.access_token)
       .subscribe(
         materials => {

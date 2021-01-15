@@ -69,7 +69,6 @@ export class ProductmaterialcreateComponent implements OnInit {
   }
 
   createProduct() {
-    //this.request =
     console.log(this.productForm.value)
     this.productMaterialService.create(this.productForm.value).subscribe(result => {
       this.gotoList();

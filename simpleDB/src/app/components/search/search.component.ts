@@ -1,5 +1,5 @@
 import { SearchService } from './../../services/search.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,6 +16,11 @@ import 'jspdf-autotable';
 export class SearchComponent implements OnInit {
 
   @Output() messageEvent = new EventEmitter<any>();
+
+  @ViewChild('filterInput') public userInput: ElementRef;
+  @ViewChild('filterTypeInput') public typeInput: ElementRef;
+  @ViewChild('filterMatInput') public matInput: ElementRef;
+
 
   access_token: any;
   product: any;
@@ -88,9 +93,7 @@ export class SearchComponent implements OnInit {
       this.searchquery = searchParam
       this._searchService.getProduct(searchParam).subscribe(
         results => {
-          console.log(results)
           this.searchresults = results
-          console.log(this.searchresults)
         }
       )
     }
@@ -100,7 +103,6 @@ export class SearchComponent implements OnInit {
     this._searchService.getProduct(this.searchquery).subscribe(
       results => {
         this.searchresults = results
-        console.log(this.searchresults)
       }
     )
     this.messageEvent.emit(this.searchresults)
@@ -108,7 +110,6 @@ export class SearchComponent implements OnInit {
 
   searchType(event: any){
     let searchParam = event.target.value;
-    console.log("Param "+searchParam, "query "+this.typequery, "res "+this.typeRes)
     if(searchParam === "") { this.typeRes = [], this.typequery=null}
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
@@ -123,7 +124,7 @@ export class SearchComponent implements OnInit {
 
   searchMaterial(event: any){
     let searchParam = event.target.value;
-    console.log("Param "+searchParam, "query "+this.materialquery, "res "+this.materialRes)
+    // console.log("Param "+searchParam, "query "+this.materialquery, "res "+this.materialRes)
     if(searchParam === "") { this.materialRes = [], this.materialquery=null}
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
@@ -141,10 +142,19 @@ export class SearchComponent implements OnInit {
     this._searchService.getCat(this.typequery, this.materialquery).subscribe(
       results => {
         this.searchresults = results
-        console.log(this.searchresults)
       }
     )
     this.messageEvent.emit(this.searchresults)
     //this.messageEvent.emit(this.searchresults)
+  }
+
+  selectedResult(result: any): void {
+    this.userInput.nativeElement.value = result;
+  }
+  selectedType(result: any): void {
+    this.typeInput.nativeElement.value = result;
+  }
+  selectedMaterial(result: any): void {
+    this.matInput.nativeElement.value = result;
   }
 }

@@ -73,7 +73,6 @@ export class ProductupdateComponent implements OnInit {
             this.productForm.controls.description.setValue(this.product.description);
             this.productForm.controls.weight.setValue(this.product.weight);
             this.productForm.controls.price.setValue(this.product.price);
-//            this.productForm.controls.removed.setValue(this.product.removed);
             console.log(this.product, this.productForm.value)
           } else {
             this.gotoList();

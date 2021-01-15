@@ -4,7 +4,7 @@
       <!-- Dropdown -->
       <div class="nav-item dropdown d-flex justify-content-center" dropdown>
         <div>
-          <input mdbInput dropdownToggle  class="mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)">
+          <input mdbInput dropdownToggle  class="mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)" #filterInput>
         </div>
         <div>
         <button mdbBtn class="btn" color="success" block="true"  type="submit" (click)="fullMatchSearch()" title="Guardar">
@@ -13,8 +13,9 @@
         </div>
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d1" role="menu" >
           <div *ngIf="searchresults.length > 0" class="dropdown">
-            <div *ngFor="let result of searchresults">
-              <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li>
+            <div *ngFor="let result of searchresults" (click)="selectedResult(result.description)">
+              <li class="dropdown-item" >{{result.description}}</li>
+              <!-- <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li> -->
             </div>
           </div>
         </div>
@@ -26,12 +27,12 @@
       <!-- Dropdown -->
       <div class="nav-item dropdown d-flex justify-content-center" dropdown>
         <div>
-          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Tipo de Produto" (keyup)="searchType($event)">
+          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Tipo de Produto" (keyup)="searchType($event)" #filterTypeInput>
         </div>
         <div>
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d2" role="menu" >
           <div *ngIf="typeRes.length > 0" class="dropdown">
-            <div *ngFor="let type of typeRes">
+            <div *ngFor="let type of typeRes"  (click)="selectedType(type.description)">
               <li class="dropdown-item" >{{type.description}}</li>
             </div>
           </div>
@@ -39,12 +40,12 @@
       </div>
       <div class="nav-item dropdown d-flex justify-content-center" dropdown>
         <div>
-          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Material do Produto" (keyup)="searchMaterial($event)">
+          <input dropdownToggle  class=" mr-sm-2" type="text" placeholder="Material do Produto" (keyup)="searchMaterial($event)" #filterMatInput>
         </div>
         <div>
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d2" role="menu" >
           <div *ngIf="materialRes.length > 0" class="dropdown">
-            <div *ngFor="let material of materialRes">
+            <div *ngFor="let material of materialRes"  (click)="selectedMaterial(material.description)">
               <li class="dropdown-item" >{{material.description}}</li>
             </div>
           </div>
@@ -54,10 +55,6 @@
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
-
-
-  </div>
-</div>
 
 <!--
 <div class="container">
