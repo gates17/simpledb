@@ -47,16 +47,27 @@
       </table>
       <div class="row justify-content-between" name="paginationOptions">
 
-        <select class="browser-default custom-select" style="width: 60px;" (change)="pageItems($event)">
+        <select class="browser-default custom-select" style="width: 80px;" (change)="pageItems($event)">
           <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
         </select>
 
-        <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>
+        <!-- <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls> -->
+        <pagination-controls id="pr" maxSize="5" (pageChange)="pageChange($event)"></pagination-controls>
 
-
+        <div class="nav-item dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <button mdbBtn color="primary" > Outras Opções </button>
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-upper dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/products/create']">Criar Produto</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/products/delete']">Removidos</a>
+            <a class="dropdown-item waves-light" (click)="convertPdf()">Gerar Pdf</a>
+          </div>
+        </div>
+<!--
         <button mdbBtn color="primary" [routerLink]="['/products/create']">Criar Produto</button>
         <button mdbBtn color="primary" [routerLink]="['/products/delete']">Removidos</button>
-        <button mdbBtn color="primary" (click)="convertPdf()">Gerar Pdf</button>
+        <button mdbBtn color="primary" (click)="convertPdf()">Gerar Pdf</button> -->
       </div>
     </div>
   </div>

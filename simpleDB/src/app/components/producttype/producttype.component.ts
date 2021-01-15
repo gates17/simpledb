@@ -61,4 +61,16 @@ export class ProducttypeComponent implements OnInit {
     });
   }
 
+  remove(id:number) {
+    this.productTypeService.delete(id).subscribe(results => {
+      console.log(results)
+      if(!results) {
+        alert("O material está associado a um produto")
+      }
+      else{
+        this.getPage()
+      }
+    });
+  }
+
 }

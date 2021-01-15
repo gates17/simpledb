@@ -13,7 +13,7 @@
         </div>
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d1" role="menu" >
           <div *ngIf="searchresults.length > 0" class="dropdown">
-            <div *ngFor="let result of searchresults" (click)="selectedResult(result.description)">
+            <div *ngFor="let result of searchresults" (click)="selectedResult(result.description)" (click)="search($event)">
               <li class="dropdown-item" >{{result.description}}</li>
               <!-- <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li> -->
             </div>
@@ -32,7 +32,7 @@
         <div>
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d2" role="menu" >
           <div *ngIf="typeRes.length > 0" class="dropdown">
-            <div *ngFor="let type of typeRes"  (click)="selectedType(type.description)">
+            <div *ngFor="let type of typeRes"  (click)="selectedType(type.description); searchType($event)">
               <li class="dropdown-item" >{{type.description}}</li>
             </div>
           </div>
@@ -45,7 +45,7 @@
         <div>
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d2" role="menu" >
           <div *ngIf="materialRes.length > 0" class="dropdown">
-            <div *ngFor="let material of materialRes"  (click)="selectedMaterial(material.description)">
+            <div *ngFor="let material of materialRes"  (click)="selectedMaterial(material.description); searchMaterial($event)">
               <li class="dropdown-item" >{{material.description}}</li>
             </div>
           </div>

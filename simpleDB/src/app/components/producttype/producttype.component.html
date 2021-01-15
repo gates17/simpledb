@@ -28,7 +28,7 @@
             <td>
               <div class="dropdown actions">
                 <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/producttype/create']"><i class="bx bxs-pencil mr-2"></i> Editar</button>
-                <button mdbBtn color="danger" class="btn btn-sm btn-icon" [routerLink]="['/producttype/detail']"><i class="bx bxs-trash mr-2"></i> Apagar</button>
+                <button mdbBtn color="danger" class="btn btn-sm btn-icon"  (click)="remove(item.id)"><i class="bx bxs-trash mr-2"></i> Apagar</button>
               </div>
             </td>
           </tr>
@@ -38,10 +38,10 @@
 
         <div class="row justify-content-between" name="paginationOptions">
 
-          <select class="browser-default custom-select" style="width: 60px;" (change)="pageItemsChange($event)">
+          <select class="browser-default custom-select" style="width: 80px;" (change)="pageItemsChange($event)">
             <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
           </select>
-          <pagination-controls id="pt" (pageChange)="pageChange($event)"></pagination-controls>
+          <pagination-controls id="pt" maxSize="5" (pageChange)="pageChange($event)"></pagination-controls>
 
           <button mdbBtn color="primary" [routerLink]="['/producttype/create']">Criar Tipo de Produto</button>
 

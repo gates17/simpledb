@@ -31,7 +31,8 @@ export class SearchService {
   }
   getCat(type, material): Observable<any> {
     //console.log(this.httpClient.get(baseURL))
-    return this.httpClient.get(`${baseURL}/cat/${type}/${material}`);
+    console.log(`${baseURL}/cat?type=${type}&material=${material}`)
+    return this.httpClient.get(`${baseURL}/cat?type=${type}&material=${material}`);
   }
 
 }

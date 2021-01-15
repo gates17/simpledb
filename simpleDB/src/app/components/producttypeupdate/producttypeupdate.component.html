@@ -1,12 +1,10 @@
 <div class="container products-container">
   <form [formGroup]="productForm" (ngSubmit)="createProduct()" id="pform">
 
-
-
     <!-- descrição -->
+    <label>Descrição do TIpo de Produto</label>
     <div class="md-form mt-0">
       <input type="text" formControlName="description" placeholder="Descrição"class="form-control" >
-
     </div>
 
    <!-- ACÇÕES -->

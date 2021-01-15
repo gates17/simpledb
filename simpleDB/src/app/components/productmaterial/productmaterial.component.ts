@@ -52,4 +52,15 @@ export class ProductmaterialComponent implements OnInit {
           this.gotoLogin();
         });
   }
+
+  remove(id:number) {
+    this.productmaterialService.delete(id).subscribe(results => {
+      if(!results) {
+        alert("O material está associado a um produto")
+      }
+      else{
+        this.readProductMaterials()
+      }
+    });
+  }
 }

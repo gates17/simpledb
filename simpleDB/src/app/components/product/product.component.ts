@@ -21,6 +21,9 @@ export class ProductComponent implements OnInit {
   access_token: any;
   product: any;
   productB: any;
+  totalPriceB: any;
+  totalWeightB: any;
+  pagesTotalB: any
   toPrint = [];
 
   pDel: any; //soft delete
@@ -30,7 +33,6 @@ export class ProductComponent implements OnInit {
 
   totalPrice: any;
   totalWeight: any;
-
 /*
   currentProduct = null;
   currentIndex = -1;
@@ -75,11 +77,17 @@ export class ProductComponent implements OnInit {
   }
 
   receiveProducts($event) {
-    if($event.length >0){
-      this.product = $event
+    if($event.results.length >0){
+      this.product = $event.results
+      this.totalPrice = $event.price[0].totalprice
+      this.totalWeight = $event.weight[0].totalweight
+      this.pagesTotal = $event.totalPages[0].total
     }
     else{
       this.product = this.productB
+      this.totalPrice = this.totalPriceB
+      this.totalWeight = this.totalWeightB
+      this.pagesTotal = this.pagesTotalB
     }
   }
 
@@ -91,16 +99,23 @@ export class ProductComponent implements OnInit {
   getPage() {
     this.productService.getPage(this.itemsTotal, this.p ).subscribe(results => {
       this.product = results.pageResults;
-      this.productB = results.products;
+      this.productB = this.product;
       this.totalPrice = results.price[0].totalprice;
       this.totalWeight = results.weight[0].totalweight;
       this.pagesTotal = results.totalPages[0].total;
-      console.log(this.product)
+      this.totalPriceB = results.price[0].totalprice;
+      this.totalWeightB = results.weight[0].totalweight;
+      this.pagesTotalB = results.totalPages[0].total;
     },
 
     error => {
       this.gotoLogin();
     });
+  }
+
+  pageChange($event) {
+    this.p=$event;
+    this.getPage();
   }
 
   readProduct(): void {
@@ -128,22 +143,27 @@ export class ProductComponent implements OnInit {
   }
 
   convertPdf() {
-
-    console.log(this.toPrint)
     var doc = new jspdf('l','mm','A4');
-    var col = [["Tipo de Produto","Material","Referencia","Descrição", "Peso", "Preço"]];
+    var col = [["Referencia", "Descrição", "Tipo de Produto", "Material", "Peso", "Preço"]];
     var rows = [];
 
     this.toPrint.forEach(element => {
       let values = [];
+      values.push(element['reference'])
+      values.push(element['description'])
+      values.push(element['type_id'])
+      values.push(element['material_id'])
+      values.push(element['weight'])
+      values.push(element['price'])
+      /* if no need to map element keys use this instead
       for (let key in element ){
         if(key !== 'id') {
           let value=element[key]
           values.push(value)
         }
       }
+       */
       rows.push(values);
-
     });
 
     (doc as any).autoTable({

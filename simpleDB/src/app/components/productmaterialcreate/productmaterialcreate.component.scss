@@ -1,0 +1,28 @@
+.my-4{
+  width: 150px;
+  margin: .375rem !important;
+}
+
+#pform{
+  margin: 60px;
+}
+
+.actions{
+  margin-bottom: 3%;
+}
+
+@media (min-width: 1024px) {
+  .products-container{
+    max-width: 775px;
+    margin: 5% auto 2% 190px;
+    border: 1px rgb(126, 124, 124) solid;
+    }
+}
+
+@media (min-width: 1200px) {
+  .products-container {
+    max-width: 1140px;
+    margin: 5% auto 2% auto;
+    border: 1px rgb(126, 124, 124) solid;
+    }
+}

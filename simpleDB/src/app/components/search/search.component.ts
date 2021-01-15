@@ -27,12 +27,12 @@ export class SearchComponent implements OnInit {
   //pDel: any;
   productSub: Subscription;
 
-  searchquery;
+  searchquery = "";
   searchresults: any = [];
+  typequery = "";
   typeRes: any = [];
+  materialquery = "";
   materialRes: any = [];
-  typequery;
-  materialquery;
 
   p: number = 1;
   options = [
@@ -86,31 +86,45 @@ export class SearchComponent implements OnInit {
   }
 
   search(event: any){
-    let searchParam = event.target.value;
-    if(searchParam === "") { this.searchresults = []}
+
+    let searchParam: any;
+
+    if(event.target.value){
+      searchParam = event.target.value;}
+    if(event.target.textContent)
+      {searchParam = event.target.textContent;}
+
+    this.searchquery = searchParam
+
+    if(!searchParam) {
+      this.searchresults = []
+    }
+
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
-      this.searchquery = searchParam
       this._searchService.getProduct(searchParam).subscribe(
         results => {
-          this.searchresults = results
+          this.searchresults = results.results
         }
       )
     }
   }
 
-  fullMatchSearch(){
-    this._searchService.getProduct(this.searchquery).subscribe(
-      results => {
-        this.searchresults = results
-      }
-    )
-    this.messageEvent.emit(this.searchresults)
-  }
-
   searchType(event: any){
-    let searchParam = event.target.value;
-    if(searchParam === "") { this.typeRes = [], this.typequery=null}
+    let searchParam: any;
+    if(event.target.value){
+      searchParam = event.target.value;}
+    if(event.target.textContent)
+      {searchParam = event.target.textContent;}
+
+    this.typequery = searchParam
+
+    if(!searchParam)
+    {
+      this.typeRes = []
+      this.typequery =""
+    }
+
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
       this.typequery = searchParam
@@ -123,9 +137,20 @@ export class SearchComponent implements OnInit {
   }
 
   searchMaterial(event: any){
-    let searchParam = event.target.value;
-    // console.log("Param "+searchParam, "query "+this.materialquery, "res "+this.materialRes)
-    if(searchParam === "") { this.materialRes = [], this.materialquery=null}
+    let searchParam: any;
+
+    if(event.target.value){
+      searchParam = event.target.value;}
+    if(event.target.textContent)
+      {searchParam = event.target.textContent;}
+
+    this.materialquery = searchParam
+
+    if(!searchParam)
+    {
+      this.materialRes = []
+      this.materialquery=""
+    }
     if(searchParam !== "" && searchParam !==null && searchParam !== undefined)
     {
       this.materialquery = searchParam
@@ -137,24 +162,42 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  catSearch(){
-
-    this._searchService.getCat(this.typequery, this.materialquery).subscribe(
+  fullMatchSearch(){
+    this._searchService.getProduct(this.searchquery).subscribe(
       results => {
         this.searchresults = results
+        this.messageEvent.emit(this.searchresults)
+
       }
     )
-    this.messageEvent.emit(this.searchresults)
+  }
+
+  catSearch(){
+    if(this.typequery || this.materialquery){
+      this._searchService.getCat(this.typequery, this.materialquery).subscribe(
+        results => {
+          this.searchresults = results
+          this.messageEvent.emit(this.searchresults)
+        }
+      )
+    } else {
+      this.searchresults.results = []
+      this.messageEvent.emit(this.searchresults)
+    }
+//    this.messageEvent.emit(this.searchresults)
     //this.messageEvent.emit(this.searchresults)
   }
 
   selectedResult(result: any): void {
     this.userInput.nativeElement.value = result;
+    this.searchquery=result;
   }
   selectedType(result: any): void {
     this.typeInput.nativeElement.value = result;
+    this.typequery = result;
   }
   selectedMaterial(result: any): void {
     this.matInput.nativeElement.value = result;
+    this.materialquery = result;
   }
 }

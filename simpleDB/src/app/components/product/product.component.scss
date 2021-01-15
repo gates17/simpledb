@@ -159,7 +159,7 @@ body {
   }
 
   .py-5{
-    background-color: #00bcd4 ;
+    background-color: #6d6d6d ;
   }
 
   div[name="paginationOptions"] {
@@ -343,7 +343,7 @@ body {
   }
 
   .py-5{
-    background-color: #00bcd4 ;
+    background-color: #6d6d6d ;
   }
 
   div[name="paginationOptions"] {
@@ -364,5 +364,12 @@ body {
     -ms-transform: translate(10%, 20%);
     transform: translate(10%, 20%) !important;
   }
+}
+
+.dropdown-menu{
+  left: -138px;
+  position: absolute;
+  top: -50px;
+  width: 50px;
 }
 

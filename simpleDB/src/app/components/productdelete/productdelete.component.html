@@ -9,8 +9,8 @@
           <tr>
             <th>Referência</th>
             <th>Descrição</th>
+            <th>Peso</th>
             <th>Preço</th>
-            <th>Criado por</th>
             <th>Acções</th>
           </tr>
         </thead>
@@ -25,8 +25,8 @@
               </a>
             </td>
             <td>{{item.description}}</td>
+            <td>{{item.weight}}</td>
             <td>{{item.price}}</td>
-            <td>{{item.insertedBy}}</td>
             <td>
               <div class="dropdown actions">
                 <button mdbBtn color="primary" class="btn btn-sm btn-icon" (click)="softDelete(item.id)"><i class="bx bxs-trash mr-2"></i> Anular Apagar</button>
@@ -37,9 +37,9 @@
           <tr>
             <td></td>
             <td></td>
-            <td></td>
             <td>Peso Total: {{totalWeight}}</td>
             <td>Valor Total: {{totalPrice}}</td>
+            <td></td>
           </tr>
 
         </tbody>

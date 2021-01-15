@@ -22,7 +22,7 @@
             <td>
               <div class="dropdown actions">
                 <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/productmaterial/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
-                <button mdbBtn color="danger" class="btn btn-sm btn-icon" [routerLink]="['/productmaterial/detail', item.id ]"><i class="bx bxs-trash mr-2"></i> Apagar</button>
+                <button mdbBtn color="danger" class="btn btn-sm btn-icon" (click)="remove(item.id)"><i class="bx bxs-trash mr-2"></i> Apagar</button>
               </div>
             </td>
           </tr>
@@ -31,10 +31,10 @@
       </table>
       <div class="row justify-content-between align-middle" name="paginationOptions">
 
-          <select class="browser-default custom-select" style="width: 60px;" (change)="pageItems($event)">
+          <select class="browser-default custom-select" style="width: 80px;" (change)="pageItems($event)">
             <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
           </select>
-          <pagination-controls id="pm" (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls id="pm" maxSize="5" (pageChange)="p = $event"></pagination-controls>
           <button mdbBtn color="primary" [routerLink]="['/productmaterial/create']">Criar Material</button>
 
         </div>
