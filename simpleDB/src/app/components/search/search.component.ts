@@ -200,4 +200,12 @@ export class SearchComponent implements OnInit {
     this.matInput.nativeElement.value = result;
     this.materialquery = result;
   }
+
+  reload() {
+    const currentRoute = this.router.url;
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentRoute]); // navigate to same route
+    });
+  }
 }

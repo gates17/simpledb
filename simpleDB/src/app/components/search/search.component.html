@@ -1,7 +1,13 @@
 <div class="wrapper">
   <div class="row mt-3 justify-content-around">
-    <div class="col-4">
+    <div class="col-2">
+        <div class="nav-item dropdown d-flex justify-content-center">
+        <button mdbBtn class="btn" color="success" block="true" type="text" (click)="reload()">Limpar Pesquisa</button>
+      </div>
+    </div>
+    <div class="col-2">
       <!-- Dropdown -->
+
       <div class="nav-item dropdown d-flex justify-content-center" dropdown>
         <div>
           <input mdbInput dropdownToggle  class="mr-sm-2" type="text" placeholder="Search" (keyup)="search($event)" #filterInput>

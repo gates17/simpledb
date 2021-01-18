@@ -1,12 +1,9 @@
-import { element } from 'protractor';
-import { SearchComponent } from './../search/search.component';
 import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
 
 import jspdf from 'jspdf';
 import 'jspdf-autotable';
@@ -115,7 +112,10 @@ export class ProductComponent implements OnInit {
 
   pageChange($event) {
     this.p=$event;
-    this.getPage();
+    if (this.pagesTotal > this.itemsTotal && this.product.length <= this.itemsTotal)
+    {
+      this.getPage();
+    }
   }
 
   readProduct(): void {
