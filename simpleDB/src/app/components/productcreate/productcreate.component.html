@@ -43,7 +43,8 @@
     <!-- referencia -->
     <label>Referência do Produto</label>
     <div class="md-form mt-0">
-      <input type="number" formControlName="reference" placeholder="Referência" class="form-control" id="reference" required ProductExists>
+      <input type="number" formControlName="reference" placeholder="Referência" class="form-control" id="reference" required>
+     <!--  <input type="number" formControlName="reference" placeholder="Referência" class="form-control" id="reference" required ProductExists> -->
 
       <div *ngIf="productForm.controls.reference.invalid &&
         (productForm.controls.reference.dirty || productForm.controls.reference.touched)"

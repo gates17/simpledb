@@ -1,47 +1,36 @@
 import { ProductService } from 'src/app/services/product.service';
 import { Directive } from '@angular/core';
-import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+
+export function existingReferenceValidator(_productService: ProductService): AsyncValidatorFn {
+  return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    return _productService.searchReference(control.value).pipe(map(
+      users => {
+        return (users && users.length > 0) ? {productExists: 'A Referência já existe.'} : null;
+      }
+    ));
+  };
+}
 
 @Directive({
   selector: '[ProductExists]',
   providers: [{
-    provide: NG_VALIDATORS,
+    provide: NG_ASYNC_VALIDATORS,
     useExisting: ProductExistsDirective,
     multi: true
   }]
 })
-export class ProductExistsDirective implements Validator{
-  match: any
+export class ProductExistsDirective implements AsyncValidator{
 
   constructor(private _productService: ProductService) {}
 
-  validate(control: AbstractControl) : {[key: string]: any} | null {
-
-    if (control.value || control.value === 0) {
-      this._productService.searchReference(control.value).subscribe(result => {
-        this.match = result
-        console.log(this.match)
-        /* if(this.match) {
-          console.log(this.match)
-          return { 'productExists': 'A Referência já existe.' }; // return object if the validation is not passed.
-        }
-        else{
-          console.log(this.match)
-          return null; // return null if validation is passed.
-
-        } */
-      })
-
-    }
-    if(this.match && this.match.length >0) {
-      console.log(this.match)
-      return { 'productExists': 'A Referência já existe.' }; // return object if the validation is not passed.
-    }
-    else{
-      console.log(this.match)
-      return null; // return null if validation is passed.
-
-    }
+  validate(control: AbstractControl) : Promise<ValidationErrors | null> | Observable<ValidationErrors | null>  {
+    return existingReferenceValidator(this._productService)(control);
   }
+
+
 
 }
