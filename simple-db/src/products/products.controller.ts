@@ -1,5 +1,5 @@
 // eslint-disable-next-line prettier/prettier
-import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, Logger } from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -11,19 +11,24 @@ export class ProductsController {
     return await this.productService.findAll();
   }
 
-  @Post()
-  async create(@Body() body): Promise<any> {
-    return await this.productService.create(body);
-  }
-
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<any> {
     return await this.productService.findOne(id);
   }
 
+  @Post()
+  async create(@Body() body): Promise<any> {
+    return await this.productService.create(body);
+  }
+
   @Put(':id')
   async update(@Param('id') id: number, @Body() body): Promise<any> {
     return await this.productService.update(id, body);
+  }
+
+  @Put(':id')
+  async softRemove(@Param('id') id: number, @Body() rm): Promise<any> {
+    return this.productService.softDelete(id, rm);
   }
 
   @Delete(':id')
@@ -35,11 +40,6 @@ export class ProductsController {
   async removeAll(@Body() body): Promise<any> {
     return this.productService.toDelete(body);
   } */
-
-  @Put(':id')
-  async softRemove(@Param('id') id: number, @Body() rm): Promise<any> {
-    return this.productService.softDelete(id, rm);
-  }
 
   @Get('page/:itemsPerPage/:pageNumber')
   async page(
@@ -55,5 +55,11 @@ export class ProductsController {
     @Param('pageNumber') pageNumber: number,
   ): Promise<any> {
     return await this.productService.removed(itemsPerPage, pageNumber);
+  }
+
+  @Get('reference')
+  async getReference(@Query() query): Promise<any> {
+    Logger.log('Product ' + query + ' !', 'SEARCHCOTROLLER');
+    return await this.productService.reference(query);
   }
 }

@@ -192,28 +192,28 @@ export class SearchService {
     }
   }
 
-  async getProduct(sp: any): Promise<any> {
+  async getProduct(query): Promise<any> {
     const totalPages: number = await this.knex('product')
       .count('*', {
         as: 'total',
       })
       .where('removed', 0)
-      .andWhere('product.description', 'like', `%${sp}%`)
-      .orWhere('product.reference', 'like', `%${sp}%`);
+      .andWhere('product.description', 'like', `%${query.sp}%`)
+      .orWhere('product.reference', 'like', `%${query.sp}%`);
 
     const price = await this.knex
       .table('product')
       .sum({ totalprice: 'price' })
       .where('removed', 0)
-      .andWhere('product.description', 'like', `%${sp}%`)
-      .orWhere('product.reference', 'like', `%${sp}%`);
+      .andWhere('product.description', 'like', `%${query.sp}%`)
+      .orWhere('product.reference', 'like', `%${query.sp}%`);
 
     const weight = await this.knex
       .table('product')
       .sum({ totalweight: 'weight' })
       .where('removed', 0)
-      .andWhere('product.description', 'like', `%${sp}%`)
-      .orWhere('product.reference', 'like', `%${sp}%`);
+      .andWhere('product.description', 'like', `%${query.sp}%`)
+      .orWhere('product.reference', 'like', `%${query.sp}%`);
 
     const results = await this.knex('product')
       .select({
@@ -228,8 +228,8 @@ export class SearchService {
       })
       .where('product.removed', 0)
       // .join('producttype', 'product.type_id', 'producttype.id')
-      .andWhere('product.description', 'like', `%${sp}%`)
-      .orWhere('product.reference', 'like', `%${sp}%`);
+      .andWhere('product.description', 'like', `%${query.sp}%`)
+      .orWhere('product.reference', 'like', `%${query.sp}%`);
 
     const pagination = { totalPages, price, weight, results };
     return pagination;

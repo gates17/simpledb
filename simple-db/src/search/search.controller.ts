@@ -1,5 +1,5 @@
 import { SearchService } from './search.service';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 
 @Controller('search')
 export class SearchController {
@@ -11,9 +11,10 @@ export class SearchController {
     return await this._searchService.getCat(query);
   }
 
-  @Get('product/:sp')
-  async getProduct(@Param('sp') sp): Promise<any> {
-    return await this._searchService.getProduct(sp);
+  @Get('product')
+  async getProduct(@Query() query): Promise<any> {
+    Logger.log('Product ' + query[0] + query[1] + ' !', 'SEARCHCOTROLLER');
+    return await this._searchService.getProduct(query);
   }
 
   @Get('type/:sp')

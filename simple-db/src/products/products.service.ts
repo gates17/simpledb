@@ -26,8 +26,8 @@ export class ProductsService {
       })
       .offset(offset)
       .limit(itemsPerPage)
-      .innerJoin('producttype', 'producttype.id', 'product.type_id')
-      .where('removed', 0);
+      .where('removed', 0)
+      .orderBy('product.reference');
 
     const price = await this.knex
       .table('product')
@@ -109,36 +109,23 @@ export class ProductsService {
     return await this.knex('product').where('id', id).del();
   }
 
-  /* async toDelete(body: any): Promise<any> {
-    console.log(body);
-    //return await this.knex('product').where('id', id).del();
-    return;
-  } */
-
   async softDelete(id: number, rm: number): Promise<any> {
     return await this.knex('product').where('id', id).update('removed', rm);
   }
 
-  /* async search(sp: any): Promise<any> {
+  async reference(query): Promise<any> {
     return await this.knex('product')
       .select({
-        id: 'product.id',
-        store_id: 'product.store_id',
-        type_id: 'product.type_id',
-        material_id: 'product.material_id',
-        reference: 'product.reference',
-        state: 'product.state',
-        entryDate: 'product.entryDate',
-        lastUpdate: 'product.lastUpdate',
-        soldDate: 'product.soldDate',
-        seller: 'product.seller',
-        insertedBy: 'product.insertedBy',
-        weight: 'product.weight',
-        price: 'product.price',
-        removed: 'product.removed',
-        description: 'product.description',
+        id: 'id',
+        reference: 'reference',
+        weight: 'weight',
+        price: 'price',
+        removed: 'removed',
+        description: 'description',
       })
-      .where('product.description', 'like', `%${sp}%`)
-      .orWhere('product.reference', 'like', `%${sp}%`);
-  } */
+      .where('removed', 0)
+      .andWhere('reference', query)
+      .toSQL()
+      .toNative();
+  }
 }
