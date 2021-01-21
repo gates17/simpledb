@@ -52,7 +52,7 @@ export class ProductService {
   } */
 
   searchReference(name): Observable<any> {
-    return this.httpClient.get(`${baseURL}/reference?ref=${name}`);
+    return this.httpClient.get(`${baseURL}/ref/${name}`);
   }
 
   getPage(itemsPerPage, pageNumber): Observable<any> {

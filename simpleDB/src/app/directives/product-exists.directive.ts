@@ -11,22 +11,37 @@ import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
   }]
 })
 export class ProductExistsDirective implements Validator{
+  match: any
 
   constructor(private _productService: ProductService) {}
 
   validate(control: AbstractControl) : {[key: string]: any} | null {
-    let match: any
-    if (control.value) {
-      console.log("INVALIDO")
+
+    if (control.value || control.value === 0) {
       this._productService.searchReference(control.value).subscribe(result => {
-        console.log(result)
-        match = result
+        this.match = result
+        console.log(this.match)
+        /* if(this.match) {
+          console.log(this.match)
+          return { 'productExists': 'A Referência já existe.' }; // return object if the validation is not passed.
+        }
+        else{
+          console.log(this.match)
+          return null; // return null if validation is passed.
+
+        } */
       })
-      console.log(match)
-      return { 'phoneNumberInvalid': true }; // return object if the validation is not passed.
+
     }
-    console.log("VALIDO")
-    return null; // return null if validation is passed.
+    if(this.match && this.match.length >0) {
+      console.log(this.match)
+      return { 'productExists': 'A Referência já existe.' }; // return object if the validation is not passed.
+    }
+    else{
+      console.log(this.match)
+      return null; // return null if validation is passed.
+
+    }
   }
 
 }
