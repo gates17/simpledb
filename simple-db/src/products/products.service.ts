@@ -100,6 +100,10 @@ export class ProductsService {
     return await this.knex('product').select('*').where('id', id);
   }
 
+  async findRef(id: number): Promise<any> {
+    return await this.knex('product').select('*').where('reference', id);
+  }
+
   async update(id: number, body: any): Promise<any> {
     // body["updatedAt"]=this.knex.fn.now();
     return await this.knex('product').where('id', id).update(body);
@@ -112,20 +116,9 @@ export class ProductsService {
   async softDelete(id: number, rm: number): Promise<any> {
     return await this.knex('product').where('id', id).update('removed', rm);
   }
-
-  async reference(query): Promise<any> {
-    return await this.knex('product')
-      .select({
-        id: 'id',
-        reference: 'reference',
-        weight: 'weight',
-        price: 'price',
-        removed: 'removed',
-        description: 'description',
-      })
-      .where('removed', 0)
-      .andWhere('reference', query)
-      .toSQL()
-      .toNative();
-  }
+  /* NAO FUNCIONA PORQUE??? 
+    async reference(query): Promise<any> {
+    console.log(query);
+    return await this.knex('product').select('*').where('reference', query.ref);
+  } */
 }

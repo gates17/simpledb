@@ -16,6 +16,16 @@ export class ProductsController {
     return await this.productService.findOne(id);
   }
 
+  @Get('ref/:id')
+  async findRef(@Param('id') id: number): Promise<any> {
+    return await this.productService.findRef(id);
+  }
+
+  /* @Get('reference')
+  async getCat(@Query() query): Promise<any> {
+    return await this.productService.reference(query);
+  } */
+
   @Post()
   async create(@Body() body): Promise<any> {
     return await this.productService.create(body);
@@ -55,11 +65,5 @@ export class ProductsController {
     @Param('pageNumber') pageNumber: number,
   ): Promise<any> {
     return await this.productService.removed(itemsPerPage, pageNumber);
-  }
-
-  @Get('reference')
-  async getReference(@Query() query): Promise<any> {
-    Logger.log('Product ' + query + ' !', 'SEARCHCOTROLLER');
-    return await this.productService.reference(query);
   }
 }
