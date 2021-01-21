@@ -96,10 +96,10 @@ export class ProductcreateComponent implements OnInit {
   createProduct() {
     const currentDate = new Date().toISOString().slice(0,10)
     this.productForm.controls.entryDate.setValue(currentDate);
-/*     this._productService.create(this.productForm.value).subscribe(result => {
+    this._productService.create(this.productForm.value).subscribe(result => {
       this.gotoList();
     }, error => console.error(error));
- */  }
+  }
 
   goBack() {
     this.location.back();
