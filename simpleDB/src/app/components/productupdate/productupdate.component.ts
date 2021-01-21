@@ -22,20 +22,14 @@ export class ProductupdateComponent implements OnInit {
   materials: any;
 
   productForm = new FormGroup({
-    type_id:  new FormControl(null),
-    material_id:  new FormControl(null),
-    reference:  new FormControl(null),
-    description:  new FormControl(null),
     lastUpdate:  new FormControl(null),
-   /*  store_id:  new FormControl(null),
-    state:  new FormControl(null),
+    type_id:  new FormControl('', [Validators.required]),
+    material_id:  new FormControl('', [Validators.required]),
+    reference:  new FormControl('', [Validators.required, Validators.maxLength(45)]),
+    description:  new FormControl('' , [Validators.required, Validators.maxLength(45)]),
     entryDate:  new FormControl(null),
-    soldDate:  new FormControl(null),
-    seller:  new FormControl(null),
-    insertedBy:  new FormControl(null), */
     weight:  new FormControl(null),
-    price:  new FormControl(null),
- //   removed:  new FormControl(null),
+    price:  new FormControl('', [Validators.required]),
   })
 
   constructor(
@@ -99,7 +93,10 @@ export class ProductupdateComponent implements OnInit {
     const currentDate = new Date().toISOString().slice(0,10)
 
     this.productForm.controls.lastUpdate.setValue(currentDate);
-
+    if (!this.productForm.controls.weight.value) {
+      this.productForm.controls.weight.setValue(0.0)
+      console.log("o peso é "+this.productForm.controls.weight.value+" gramas")
+    }
     this._productService.update(this.product.id, this.productForm.value).subscribe(result => {
       console.log('teste')
       this.gotoList();

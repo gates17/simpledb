@@ -51,8 +51,8 @@ export class ProductService {
     return this.httpClient.delete(baseURL,data);
   } */
 
-  searchByName(name): Observable<any> {
-    return this.httpClient.get(`${baseURL}?name=${name}`);
+  searchReference(name): Observable<any> {
+    return this.httpClient.get(`${baseURL}/reference?ref=${name}`);
   }
 
   getPage(itemsPerPage, pageNumber): Observable<any> {

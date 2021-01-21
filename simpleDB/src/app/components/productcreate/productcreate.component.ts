@@ -1,7 +1,7 @@
 import { ProducttypeService } from './../../services/producttype.service';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductmaterialService } from 'src/app/services/productmaterial.service';
@@ -21,23 +21,25 @@ export class ProductcreateComponent implements OnInit {
 
   //productSub: Subscription;
   productForm = new FormGroup({
-    type_id:  new FormControl(null),
-    material_id:  new FormControl(null),
-    reference:  new FormControl(null),
-    description:  new FormControl(null),
+    type_id:  new FormControl('', [Validators.required]),
+    material_id:  new FormControl('', [Validators.required]),
+    reference:  new FormControl('', [Validators.required, Validators.maxLength(45)]),//, ValidateReference]),
+    description:  new FormControl('' , [Validators.required, Validators.maxLength(45)]),
     entryDate:  new FormControl(null),
-/*     store_id:  new FormControl(null),
+    weight:  new FormControl(null),
+    price:  new FormControl('', [Validators.required]),
+    /*
+    store_id:  new FormControl(null),
     state:  new FormControl(null),
     lastUpdate:  new FormControl(null),
     soldDate:  new FormControl(null),
     seller:  new FormControl(null),
     insertedBy:  new FormControl(null),
- */    weight:  new FormControl(null),
-    price:  new FormControl(null),
-     /*
+    */
+    /*
     name: new FormControl('', [Validators.required,Validators.maxLength(255)]),
     tlf: new FormControl('', [ Validators.required, Validators.max(999999999), Validators.min(900000000)]),
-   */
+    */
   })
 
   validation_messages = {
@@ -92,16 +94,36 @@ export class ProductcreateComponent implements OnInit {
   }
 
   createProduct() {
-    console.log('TESTE')
     const currentDate = new Date().toISOString().slice(0,10)
     this.productForm.controls.entryDate.setValue(currentDate);
-    this._productService.create(this.productForm.value).subscribe(result => {
+/*     this._productService.create(this.productForm.value).subscribe(result => {
       this.gotoList();
     }, error => console.error(error));
-  }
+ */  }
 
   goBack() {
     this.location.back();
   }
 
 }
+
+/* export function ValidateReference(control: AbstractControl): {[key: string]: any} | null  {
+  console.log("VALOR INICIAL "+control.value)
+  console.log(control.valid, control.value.length)
+  let match: any;
+  if (control.value ) {
+
+    console.log("INVALIDO")
+
+    this._productService.searchReference().subscribr(result => {
+      this.match=result
+    })
+    console.log(match)
+
+    console.log(control.valid)
+    return { 'phoneNumberInvalid': true };
+  }
+
+  console.log("VALIDO")
+  return null;
+} */

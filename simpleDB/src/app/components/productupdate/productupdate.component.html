@@ -4,51 +4,100 @@
     <!-- tipo -->
     <label>Tipo do Produto</label>
     <div class="md-form mt-0">
-      <select class="browser-default custom-select form-control" formControlName="type_id" style="width: 200px;" >
-        <option>Tipo de Produto</option>
+      <select class="browser-default custom-select form-control" formControlName="type_id" style="width: 200px;" required>
+        <!--<option  [selected]="true" [disabled]="true" >Tipo de Produto</option>-->
         <option *ngFor="let type of this.types" [ngValue]="type.id">{{ type.description }}</option>
       </select>
+
+      <div *ngIf="productForm.controls.type_id.invalid &&
+        (productForm.controls.type_id.dirty || productForm.controls.type_id.touched)"
+        class="alert alert-danger">
+
+        <div *ngIf="productForm.controls.type_id.errors.required">
+          O Tipo de Produto é obrigatório.
+        </div>
+      </div>
+
     </div>
 
     <!-- material -->
-    <label>Material do Produto</label>
+    <label>Escolha o Material de Produto</label>
     <div class="md-form mt-0">
-      <select class="browser-default custom-select form-control" formControlName="material_id" placeholder="Material"  style="width: 200px;" >
-        <option>Tipo de Material</option>
+
+      <select class="browser-default custom-select form-control" formControlName="material_id" placeholder="Material" required style="width: 200px;" >
+        <!--<option  [selected]="true" [disabled]="true" >Tipo de Produto</option>-->
         <option *ngFor="let m of this.materials" [ngValue]="m.id">{{ m.description }}</option>
       </select>
-    </div>
 
+      <div *ngIf="productForm.controls.material_id.invalid &&
+        (productForm.controls.material_id.dirty || productForm.controls.material_id.touched)"
+        class="alert alert-danger">
+
+        <div *ngIf="productForm.controls.material_id.errors.required">
+          O Material de Produto é obrigatório.
+        </div>
+      </div>
+
+    </div>
 
     <!-- referencia -->
     <label>Referência do Produto</label>
     <div class="md-form mt-0">
-      <input type="number" formControlName="reference" placeholder="Referência" class="form-control" >
+      <input type="number" formControlName="reference" placeholder="Referência" class="form-control" id="reference" required>
+
+      <div *ngIf="productForm.controls.reference.invalid &&
+        (productForm.controls.reference.dirty || productForm.controls.reference.touched)"
+        class="alert alert-danger">
+
+        <div *ngIf="productForm.controls.reference.errors.required">
+          A Referência é obrigatória.
+        </div>
+      </div>
     </div>
 
     <!-- descrição -->
     <label>Descrição do Produto</label>
     <div class="md-form mt-0">
-      <input type="text" formControlName="description" placeholder="Descrição"class="form-control" >
+      <input type="text" formControlName="description" placeholder="Descrição"class="form-control" required>
+      <div *ngIf="productForm.controls.description.invalid &&
+      (productForm.controls.description.dirty || productForm.controls.description.touched)"
+      class="alert alert-danger">
+
+        <div *ngIf="productForm.controls.description.errors.required">
+          A Descrição é obrigatória.
+        </div>
+        <div *ngIf="productForm.controls.description.errors.maxlength">
+          A Descrição deve conter no maximo ate 45 letras.
+        </div>
+      </div>
     </div>
 
     <!-- peso -->
     <label>Peso do Produto</label>
     <div class="md-form mt-0">
       <input type="number" formControlName="weight" placeholder="Peso" class="form-control" >
+
     </div>
 
     <!-- preço -->
     <label>Preço do Produto</label>
     <div class="md-form mt-0">
-      <input type="number" formControlName="price" placeholder="Preço" class="form-control" >
+      <input type="number" formControlName="price" placeholder="Preço" class="form-control" required>
+      <div *ngIf="productForm.controls.price.invalid &&
+      (productForm.controls.price.dirty || productForm.controls.price.touched)"
+      class="alert alert-danger">
+
+        <div *ngIf="productForm.controls.price.errors.required">
+          A Preço é obrigatório.
+        </div>
+      </div>
     </div>
 
 
     <!-- ACÇÕES -->
     <div class="flex-center actions">
       <div class="flex-item">
-        <button mdbBtn color="success" block="true" class="my-4" type="submit" title="Guardar">
+        <button mdbBtn color="success" block="true" class="my-4" type="submit" [disabled]="!productForm.valid" title="Guardar">
           <i class="fa fa-save" aria-hidden="true"></i>
           Guardar
         </button>
@@ -58,6 +107,9 @@
           <i class="fa fa-remove" aria-hidden="true"></i>
         </button>
       </div>
+    </div>
+    <div *ngIf="!productForm.valid" class="alert alert-warning">
+      Preencha os campos obrigatórios para poder criar o produto
     </div>
 
   </form>

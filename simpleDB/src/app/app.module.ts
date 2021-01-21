@@ -29,6 +29,7 @@ import { ProducttypeupdateComponent } from './components/producttypeupdate/produ
 import { SalesHistoryComponent } from './components/sales-history/sales-history.component';
 import { SearchComponent } from './components/search/search.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProductExistsDirective } from './directives/product-exists.directive';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ProducttypeupdateComponent,
     SalesHistoryComponent,
     SearchComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductExistsDirective
   ],
   imports: [
     BrowserModule,

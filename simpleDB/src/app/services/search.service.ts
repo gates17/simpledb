@@ -19,7 +19,8 @@ export class SearchService {
   constructor(private httpClient: HttpClient) { }
 
   getProduct(query): Observable<any> {
-    return this.httpClient.get(`${baseURL}/product/${query}`);
+    console.log(query)
+    return this.httpClient.get(`${baseURL}/product?sp=${query}`);
   }
 
   getType(query): Observable<any> {
