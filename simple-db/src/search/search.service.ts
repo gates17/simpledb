@@ -44,7 +44,8 @@ export class SearchService {
           description: 'product.description',
         })
         .innerJoin('producttype', 'product.type_id', 'producttype.id')
-        .where('producttype.description', 'like', `%${query['type']}%`);
+        .where('producttype.description', 'like', `%${query['type']}%`)
+        .orderBy('product.reference');
 
       const pagination = { totalPages, price, weight, results };
       return pagination;
@@ -102,7 +103,9 @@ export class SearchService {
           'product.material_id',
           'productmaterial.id',
         )
-        .where('productmaterial.description', 'like', `%${query['material']}%`);
+        .where('productmaterial.description', 'like', `%${query['material']}%`)
+        .andWhere('removed', 0)
+        .orderBy('product.reference');
 
       const pagination = { totalPages, price, weight, results };
       return pagination;
@@ -186,7 +189,8 @@ export class SearchService {
           'productmaterial.description',
           'like',
           `%${query['material']}%`,
-        );
+        )
+        .orderBy('product.reference');
       const pagination = { totalPages, price, weight, results };
       return pagination;
     }
@@ -198,22 +202,23 @@ export class SearchService {
         as: 'total',
       })
       .where('removed', 0)
-      .andWhere('product.description', 'like', `%${query.sp}%`)
-      .orWhere('product.reference', 'like', `%${query.sp}%`);
+      // .andWhere('product.description', 'like', `%${query.sp}%`)
+      // .orWhere('product.reference', 'like', `%${query.sp}%`);
+      .andWhere('product.reference', 'like', `%${query.sp}%`);
 
     const price = await this.knex
       .table('product')
       .sum({ totalprice: 'price' })
       .where('removed', 0)
-      .andWhere('product.description', 'like', `%${query.sp}%`)
-      .orWhere('product.reference', 'like', `%${query.sp}%`);
+      // .andWhere('product.description', 'like', `%${query.sp}%`)
+      .andWhere('product.reference', 'like', `%${query.sp}%`);
 
     const weight = await this.knex
       .table('product')
       .sum({ totalweight: 'weight' })
       .where('removed', 0)
-      .andWhere('product.description', 'like', `%${query.sp}%`)
-      .orWhere('product.reference', 'like', `%${query.sp}%`);
+      // .andWhere('product.description', 'like', `%${query.sp}%`)
+      .andWhere('product.reference', 'like', `%${query.sp}%`);
 
     const results = await this.knex('product')
       .select({
@@ -228,43 +233,13 @@ export class SearchService {
       })
       .where('product.removed', 0)
       // .join('producttype', 'product.type_id', 'producttype.id')
-      .andWhere('product.description', 'like', `%${query.sp}%`)
-      .orWhere('product.reference', 'like', `%${query.sp}%`);
+      // .andWhere('product.description', 'like', `%${query.sp}%`)
+      .andWhere('product.reference', 'like', `%${query.sp}%`)
+      .orderBy('product.reference');
 
     const pagination = { totalPages, price, weight, results };
     return pagination;
   }
-
-  /*  const x: number = +pageNumber;
-  const offset = (x - 1) * itemsPerPage;
-
-
-  const pageResults = await this.knex('product')
-    .select({
-      id: 'product.id',
-      type_id: 'product.type_id',
-      material_id: 'product.material_id',
-      reference: 'product.reference',
-      description: 'product.description',
-      weight: 'product.weight',
-      price: 'product.price',
-    })
-    .offset(offset)
-    .limit(itemsPerPage)
-    .innerJoin('producttype', 'producttype.id', 'product.type_id')
-    .where('removed', 0);
-
-  const price = await this.knex
-    .table('product')
-    .sum({ totalprice: 'price' })
-    .where('removed', 0);
-
-  const weight = await this.knex
-    .table('product')
-    .sum({ totalweight: 'weight' })
-    .where('removed', 0);
-  const pagination = { totalPages, price, weight, pageResults };
-  return pagination; */
 
   async getType(sp: any): Promise<any> {
     return await this.knex('producttype')
