@@ -53,7 +53,8 @@ export class ProductsService {
     const pageResults = await this.knex('product')
       .offset(offset)
       .limit(itemsPerPage)
-      .where('removed', 1);
+      .where('removed', 1)
+      .orderBy('product.reference');
 
     const price = await this.knex
       .table('product')
@@ -80,9 +81,10 @@ export class ProductsService {
         price: 'product.price',
       })
       .from('product')
-      .innerJoin('producttype', 'producttype.id', 'product.type_id')
-      .innerJoin('productmaterial', 'productmaterial.id', 'product.material_id')
-      .where('removed', 0);
+      .leftJoin('producttype', 'producttype.id', 'product.type_id')
+      .leftJoin('productmaterial', 'productmaterial.id', 'product.material_id')
+      .where('removed', 0)
+      .orderBy('product.reference');
 
     const price = await this.knex.table('product').sum({ totalprice: 'price' });
     const weight = await this.knex
