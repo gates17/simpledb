@@ -51,12 +51,23 @@ export class ProductdetailComponent implements OnInit {
             this.product = prod[0];
 
             this._productTypeService.get(this.product.type_id).subscribe((pt: any) => {
-              this.productForm.controls.type_id.setValue(pt[0].description);
+              console.log(pt.length)
+              if (pt.length > 0){
+                this.productForm.controls.type_id.setValue(pt[0].description);
+              }
+              else {
+                this.productForm.controls.type_id.setValue('Sem Tipo de Produto');
+              }
             });
 
             this._materialService.get(this.product.material_id).subscribe((mat: any) => {
-              console.log(mat[0].description)
-              this.productForm.controls.material_id.setValue(mat[0].description);
+              console.log(mat.length)
+              if (mat.length > 0){
+                this.productForm.controls.material_id.setValue(mat[0].description);
+              }
+              else {
+                this.productForm.controls.material_id.setValue('Sem Material do Produto');
+              }
             });
 
             this.productForm.controls.reference.setValue(this.product.reference);

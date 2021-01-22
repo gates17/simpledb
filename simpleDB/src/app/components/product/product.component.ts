@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit {
   totalWeightB: any;
   pagesTotalB: any
   toPrint = [];
+  toPrintB = [];
 
   pDel: any; //soft delete
 
@@ -59,9 +60,8 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.access_token= sessionStorage.getItem('access_token')
     this.getPage();
-    this.productService.getAll(this.access_token).subscribe(results => {
-      this.toPrint = results.products
-    })
+    this.productsToPrint()
+
 
   }
 
@@ -73,24 +73,35 @@ export class ProductComponent implements OnInit {
     this.location.back();
   }
 
+  productsToPrint() {
+    this.productService.getAll(this.access_token).subscribe(results => {
+      this.toPrint = results.products
+      this.toPrintB = results.products
+      console.log(this.toPrint)
+    })
+  }
+
   receiveProducts($event) {
     if($event.results.length >0){
       this.product = $event.results
       this.totalPrice = $event.price[0].totalprice
       this.totalWeight = $event.weight[0].totalweight
       this.pagesTotal = $event.totalPages[0].total
+      this.toPrint = $event.results
     }
     else{
       this.product = this.productB
       this.totalPrice = this.totalPriceB
       this.totalWeight = this.totalWeightB
       this.pagesTotal = this.pagesTotalB
+      this.toPrint = this.toPrintB
     }
   }
 
 
   pageItems(event: any){
     this.itemsTotal=event.target.value
+    this.getPage();
   }
 
   getPage() {
@@ -143,7 +154,7 @@ export class ProductComponent implements OnInit {
   }
 
   convertPdf() {
-    var doc = new jspdf('l','mm','A4');
+    var doc = new jspdf('p','mm','A4');
     var col = [["Referencia", "Descrição", "Tipo de Produto", "Material", "Peso", "Preço"]];
     var rows = [];
 
