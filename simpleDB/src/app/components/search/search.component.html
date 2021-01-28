@@ -1,11 +1,17 @@
 <div class="wrapper">
   <div class="row mt-3 d-flex justify-content-start">
-    <div class="col-2">
+    <div class="col-4">
       <div class="nav-item dropdown">
         <button mdbBtn class="btn clearSearch" color="success" block="true" type="text" (click)="reload()">Limpar Pesquisa</button>
       </div>
     </div>
+    <div class="col-4">
+      <div class="nav-item dropdown">
+        <button mdbBtn color="success" block="true" type="text" class="btn clearSearch" mdbWavesEffect [routerLink]="['/products/create']">Criar Produto</button>
+      </div>
+    </div>
   </div>
+
   <div class="row mt-3 justify-content-around">
 
     <div class="col-4">
@@ -23,7 +29,7 @@
         <div  *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary d1" role="menu" >
           <div *ngIf="searchresults.length > 0" class="dropdown">
             <div *ngFor="let result of searchresults" (click)="selectedResult(result.description)" (click)="search($event)">
-              <li class="dropdown-item" >{{result.description}}</li>
+              <li class="dropdown-item" [value]="result.reference">{{result.description}}</li>
               <!-- <li class="dropdown-item" [routerLink]="['/products/detail/', result.id]">{{result.description}}</li> -->
             </div>
           </div>

@@ -90,10 +90,11 @@ export class SearchComponent implements OnInit {
     let searchParam: any;
 
     if(event.target.value){
-      searchParam = event.target.value;}
-    if(event.target.textContent)
-      {searchParam = event.target.textContent;}
-
+      searchParam = event.target.value;
+    }
+    /* if(event.target.textContent){
+      searchParam = event.target.textContent;
+    } */
     this.searchquery = searchParam
 
     if(!searchParam) {
