@@ -77,7 +77,6 @@ export class ProductComponent implements OnInit {
     this.productService.getAll(this.access_token).subscribe(results => {
       this.toPrint = results.products
       this.toPrintB = results.products
-      console.log(this.toPrint)
     })
   }
 
@@ -107,6 +106,7 @@ export class ProductComponent implements OnInit {
   getPage() {
     this.productService.getPage(this.itemsTotal, this.p ).subscribe(results => {
       this.product = results.pageResults;
+      console.log(this.product)
       this.productB = this.product;
       this.totalPrice = results.price[0].totalprice;
       this.totalWeight = results.weight[0].totalweight;

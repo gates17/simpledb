@@ -101,6 +101,14 @@ export class ProductdeleteComponent implements OnInit {
     });
   }
 
+  pageChange($event) {
+    this.p=$event;
+    if (this.pagesTotal > this.itemsTotal && this.product.length <= this.itemsTotal)
+    {
+      this.getPage();
+    }
+  }
+  
   softDelete(pid){
     this.productForm.controls.removed.setValue(0)
     this.productService.softDelete(pid, this.productForm.value).subscribe(result => {
@@ -108,6 +116,13 @@ export class ProductdeleteComponent implements OnInit {
       this.router.navigate(['/products/delete']);
     }, error => console.error(error));
   }
+
+  remove(pid){
+    this.productService.delete(pid).subscribe()
+    this.getPage();
+    //this.productService.deleteAll(toRemove).subscribe(result => {})
+  }
+
   removeAll(){
     for(let p of this.product){
       this.productService.delete(p.id).subscribe()

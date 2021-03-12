@@ -29,7 +29,8 @@
             <td>{{item.price}}</td>
             <td>
               <div class="dropdown actions">
-                <button mdbBtn color="primary" class="btn btn-sm btn-icon" (click)="softDelete(item.id)"><i class="bx bxs-trash mr-2"></i> Anular Apagar</button>
+                <button mdbBtn color="primary" class="btn btn-sm btn-icon" (click)="softDelete(item.id)"><i class="bx bxs-trash mr-2"></i> Restaurar Produto</button>
+                <button mdbBtn color="danger" class="btn btn-sm btn-icon" (click)="remove(item.id)"><i class="bx bxs-trash mr-2"></i> Remover Produto</button>
               </div>
 
             </td>
@@ -50,10 +51,11 @@
           <option *ngFor="let option of options" value={{option.label}}>{{ option.label }}</option>
         </select>
 
-        <pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>
+        <!--<pagination-controls id="pr" (pageChange)="p = $event"></pagination-controls>-->
+        <pagination-controls id="pr" maxSize="5" (pageChange)="pageChange($event)"></pagination-controls>
 
 
-        <button mdbBtn color="primary" (click)="removeAll()">Remover Todos</button>
+        <button mdbBtn color="danger" (click)="removeAll()">Remover Todos</button>
         <button mdbBtn color="primary" (click)="convertPdf()">Gerar Pdf</button>
       </div>
     </div>
