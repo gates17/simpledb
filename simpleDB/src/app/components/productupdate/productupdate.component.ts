@@ -27,7 +27,6 @@ export class ProductupdateComponent implements OnInit {
     material_id:  new FormControl('', [Validators.required]),
     reference:  new FormControl('', [Validators.required, Validators.maxLength(45)]),
     description:  new FormControl('' , [Validators.required, Validators.maxLength(45)]),
-    entryDate:  new FormControl(null),
     weight:  new FormControl(null),
     price:  new FormControl('', [Validators.required]),
   })

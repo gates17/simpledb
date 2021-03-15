@@ -36,7 +36,7 @@ export class ProductService {
   }
 
   update(id, data): Observable<any> {
-    return this.httpClient.put(`${baseURL}/${id}`, data);
+    return this.httpClient.patch(`${baseURL}/${id}`, data);
   }
 
   delete(id): Observable<any> {
@@ -44,7 +44,7 @@ export class ProductService {
   }
 
   softDelete(id, data): Observable<any> {
-    return this.httpClient.put(`${baseURL}/${id}`, data);
+    return this.httpClient.patch(`${baseURL}/${id}`, data);
   }
 
   /* deleteAll(data): Observable<any> {

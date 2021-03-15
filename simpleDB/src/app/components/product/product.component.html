@@ -29,6 +29,7 @@
             <td>{{item.price}}</td>
             <td>
               <div class="dropdown actions">
+                <!-- <button mdbBtn color="success" class="btn btn-sm btn-icon" [routerLink]="['/products/sell/', item.id]"><i class="bx bxs-pencil mr-2"></i> Vender</button> -->
                 <button mdbBtn color="primary" class="btn btn-sm btn-icon" [routerLink]="['/products/update/', item.id]"><i class="bx bxs-pencil mr-2"></i> Editar</button>
                 <button mdbBtn color="danger" class="btn btn-sm btn-icon" (click)="softDelete(item.id)"><i class="bx bxs-trash mr-2"></i> Apagar</button>
               </div>
